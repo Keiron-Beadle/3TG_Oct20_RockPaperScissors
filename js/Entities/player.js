@@ -1,5 +1,5 @@
 class Player {
-    constructor(pMainContext, pPositionVec, pSprite, pSpeedX, pSpeedY){
+    constructor(pMainContext, pPositionVec, pSprite, pMoveX, pMoveY){
         // this.loaded = false;
          this.mSprite = pSprite;
          this.mPosition = pPositionVec;
@@ -9,8 +9,8 @@ class Player {
          this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
              0, new Vector(1,1,1), mPlayerImage, 10, 270, 270, new Vector(3,3,0));
 
-        this.setSpeedX(pSpeedX);
-        this.setSpeedY(pSpeedY);
+        this.setMoveX(pMoveX);
+        this.setMoveY(pMoveY);
         //this.mSpeedX = 0;
         //this.mSpeedY = 0;
 
@@ -18,35 +18,33 @@ class Player {
         //    this.mSpeedY += 1;
         //}
     }
-    getSpeedX() {
-        return this.mSpeedX;
+    getMoveX() {
+        return this.mMoveX;
     }
-    setSpeedX(pSpeedX) {
-        this.mSpeedX = pSpeedX;
+    setMoveX(pMoveX) {
+        this.mMoveX = pMoveX;
     }
-    getSpeedY() {
-        return this.mSpeedY;
+    getMoveY() {
+        return this.mMoveY;
     }
-    setSpeedY(pSpeedY) {
-        this.mSpeedY = pSpeedY;
+    setMoveY(pMoveY) {
+        this.mMoveY = pMoveY;
     }
 
      update(){
          this.mAnimatedSpriteSheet.update();
      }
- 
      draw(pWorldMatrix){
         var transformMatrix = this.newPosition(pWorldMatrix);
         this.mAnimatedSpriteSheet.draw(transformMatrix);
     }   
-
     newPosition(pWorldMatrix) {
         var x, y, translate, transform, newPosition;
 
         x = this.mPosition.getX();
-        x += this.getSpeedX();
+        x += this.getMoveX();
         y = this.mPosition.getY();
-        y += this.getSpeedY();
+        y += this.getMoveY();
 
         newPosition = new Vector(x, y, 1);
 
@@ -56,52 +54,48 @@ class Player {
         return transform;
     }
     
-    /*
+    /* Dont need that
     updateGameArea() {
       //myGameArea.clear();
       this.mAnimatedSpriteSheet.newPos();
       this.mAnimatedSpriteSheet.update();
     }
     */
-
-    moveup() {
+    moveUp() {
         if(document.getElementById("up").onclick) {
-            var speedY = this.getSpeedY();
-            speedY -= 1;
-            this.setSpeedY(speedY);
+            var moveY = this.getMoveY();
+            moveY -= 1;
+            this.setMoveY(moveY);
         }
     }
-    
     /*
-    movedown() {
+    moveDown() {
         if(document.getElementById("up").onclick) {
-            var speedY = this.getSpeedY();
-            speedY += 1;
-            this.setSpeedY(speedY);
+            var moveY = this.getMoveY();
+            moveY += 1;
+            this.setMoveY(moveY);
         }
     }
     */
-    moveleft() {
+    moveLeft() {
         if(document.getElementById("up").onclick) {
-            var speedX = this.getSpeedX();
-            speedX -= 1;
-            this.setSpeedX(speedX);
+            var moveX = this.getMoveX();
+            moveX -= 1;
+            this.setMoveX(moveX);
         }
     }
-    
-    moveright() {
+    moveRight() {
         if(document.getElementById("up").onclick) {
-            var speedX = this.getSpeedX();
-            speedX += 1;
-            this.setSpeedX(speedX);
+            var moveX = this.getMoveX();
+            moveX += 1;
+            this.setMoveX(moveX);
         }
     }
-
     stopMove() {
-        this.setSpeedX(0);
-        this.setSpeedY(0);
+        this.setMoveX(0);
+        this.setMoveY(0);
     }
-
+    /*
     setupKeyControls() {
         document.onkeydown = function(e) {
           switch (e.keyCode) {
@@ -120,6 +114,7 @@ class Player {
           }
         };
     }
+    */
 }
     
     

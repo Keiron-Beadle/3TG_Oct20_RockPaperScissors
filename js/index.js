@@ -84,14 +84,11 @@ function onLoad() {
         renderVisitor.visit(rootNode);
 
         // TRY CONTROL
-    
         document.getElementById('down').onclick = function() {
-            //var speedY = entities[0].getSpeedY();
-            //speedY += 1;
-            //alert(speedY);
-            var speedY = entities[1].getSpeedY();
-            speedY += 1;
-            entities[1].setSpeedY(speedY);
+            //alert(moveY);
+            var moveY = entities[1].getMoveY();
+            moveY += 1;
+            entities[1].setMoveY(moveY);
         }
         //
         for (var i = 0; i < entities.length; i++){
