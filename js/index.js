@@ -52,7 +52,7 @@ function onLoad() {
         //Keiron's Enemy Test
             enemyTest = new Enemy(context, new Vector(100,50,1), 'SpriteSheets/Demon-Walk.png');
             entities.push(enemyTest);
-            player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf_walk.png');
+            player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf_walk.png', 0, 0);
             //enemyTest.setTarget(player);
             entities.push(player);
         //
@@ -84,8 +84,12 @@ function onLoad() {
         renderVisitor.visit(rootNode);
 
         // TRY CONTROL
+    
         document.getElementById('down').onclick = function() {
-            var speedY = entities[0].getSpeedY();
+            //var speedY = entities[0].getSpeedY();
+            //speedY += 1;
+            //alert(speedY);
+            var speedY = entities[1].getSpeedY();
             speedY += 1;
             entities[1].setSpeedY(speedY);
         }
