@@ -1,16 +1,15 @@
 class Player {
-    constructor(pMainContext, pPositionVec, pSprite, pMoveX, pMoveY){
-        // this.loaded = false;
+    constructor(pMainContext, pPositionVec, pSprite){
          this.mSprite = pSprite;
          this.mPosition = pPositionVec;
          this.mMainContext = pMainContext;
          var mPlayerImage = new Image();
          mPlayerImage.src = this.mSprite;
          this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
-             0, new Vector(1,1,1), mPlayerImage, 10, 270, 270, new Vector(3,3,0));
+             0, new Vector(1,1,1), mPlayerImage, 10, 270, 270, [3,3]);
 
-        this.setMoveX(pMoveX);
-        this.setMoveY(pMoveY);
+        //this.setMoveX(pMoveX);
+        //this.setMoveY(pMoveY); //<-- James said he didn't need these parameters anymore so I removed them from constructor
         //this.mSpeedX = 0;
         //this.mSpeedY = 0;
 
@@ -31,13 +30,14 @@ class Player {
         this.mMoveY = pMoveY;
     }
 
-     update(){
+    update(){
          this.mAnimatedSpriteSheet.update();
-     }
-     draw(pWorldMatrix){
+    }
+    draw(pWorldMatrix){
         var transformMatrix = this.newPosition(pWorldMatrix);
         this.mAnimatedSpriteSheet.draw(transformMatrix);
-    }   
+    }
+
     newPosition(pWorldMatrix) {
         var x, y, translate, transform, newPosition;
 
@@ -52,6 +52,28 @@ class Player {
         transform = pWorldMatrix.multiply(translate);
         
         return transform;
+    }
+
+    getPosition(){
+      return this.mPosition;
+    }
+
+    getCenterPosition(){
+      return new Vector(this.mPosition.getX() + 270 / 2, this.mPosition.getY() + 270 / 2, 0);
+    }
+    
+    newPosition() {
+        this.mPosition.getX() += this.mSpeedX;
+        this.mPosition.getY() += this.mSpeedY;
+    }
+
+    getVertices(){
+        let posX = this.mPosition.getX();
+        let posY = this.mPosition.getY();
+        return [new Vector(posX, poY, 0),
+                new Vector(posX + 270, posY, 0),
+                new Vector(posX + 270, posY - 270, 0),
+                new Vector(posX, posY - 270, 0)];
     }
     
     /* Dont need that
@@ -116,5 +138,4 @@ class Player {
     }
     */
 }
-    
     
