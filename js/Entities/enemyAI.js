@@ -1,42 +1,37 @@
 class EnemyAI{
     constructor(){
-        this.currentGoal = new Vector(100,0);
-        const RANDOM = 0;
-        const MOVING = 1;
-        const ATTACKING = 2;
+        this.RANDOM = 0;
+        this.MOVING = 1;
+        this.ATTACKING = 2;
         this.states = ["Random", "Moving", "Attacking"];
-        this.currentState = this.states[RANDOM];
+        this.currentState = this.states[this.RANDOM];
     }
 
     update(pPos, pTarget){
-        if (this.currentGoal != null){
-            this.moveToGoal(pPos);
-            return;
-        }
+        let returnGoal;
         switch(this.currentState){
-            case this.states[RANDOM]:
-                runRandom(pPos);
+            case this.states[this.RANDOM]:
+                returnGoal = this.runRandom(pPos);
                 break;
-            case this.states[MOVING]:
-                runMoving(pPos, pTarget);
+            case this.states[this.MOVING]:
+                returnGoal = this.runMoving(pPos, pTarget);
                 break;
-            case this.states[ATTACKING]:
-                runAttacking(pPos, pTarget);
+            case this.states[this.ATTACKING]:
+                returnGoal = this.runAttacking(pPos, pTarget);
                 break
         }
-    }
-
-    moveToGoal(pPos){
-        if (pPos.getX() < this.currentGoal.getX()){
-            pPos.setX(pPos.getX()+1);
-        }
-        else if (pPos.getX() > this.currentGoal.getX()){
-            pPos.setX(pPos.getX()-1);
-        }
+        return returnGoal;
     }
 
     runRandom(pPos){
-        
+        let movement = Math.random();
+        if (movement == 0){
+            movement = 10 -Math.random() *100;
+        }
+        else{
+            movement = 10 + Math.random() *100;
+        }
+        return new Vector(pPos.getX() + movement, pPos.getY());
     }
 
     runMoving(pPos){

@@ -4,6 +4,7 @@ class Enemy{
         this.position = pPositionVec;
         this.mainContext = pMainContext;
         this.projectiles = [];
+        this.speed = 1;
         var enemyImage = new Image();
         enemyImage.src = this.sprite;
         this.animatedSpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
@@ -22,9 +23,26 @@ class Enemy{
 
     update(){
         this.animatedSpriteSheet.update();
-        this.AI.update(this.position, this.getTarget());
+        if (this.goal == null){
+            this.goal = this.AI.update(this.position, this.getTarget());
+        }
+        else{
+            this.moveToGoal();
+        }
         //Implement AI updates here
         //Projectiles passed & Position
+    }
+
+    moveToGoal(){
+        if (Math.floor(this.position.getX()) == Math.floor(this.goal.getX())){
+            this.goal = null;
+        }
+        else if (this.position.getX() < this.goal.getX()){
+            this.position.setX(this.position.getX() + this.speed);
+        }
+        else if (this.position.getX() > this.goal.getX()){
+            this.position.setX(this.position.getX() - this.speed);
+        }
     }
 
     draw(pWorldMatrix){
