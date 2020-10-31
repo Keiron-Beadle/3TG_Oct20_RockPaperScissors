@@ -33,6 +33,19 @@
     <canvas id="gameCanvas" width="1368" height="768" style="border:1px solid #000000; background-color: 
     #222222;">Your browser does not support canvas tag.
     </canvas>
+<!--
+<button onclick="moveup()">UP</button>
+<button onclick="movedown()">DOWN</button>
+<button onclick="moveleft()">LEFT</button>
+<button onclick="moveright()">RIGHT</button>
+-->
+<button id="up" onmousedown="moveup()" onmouseup="stopMove()" ontouchstart="moveup()">UP</button>
+<p>
+<button id="left" onmousedown="moveleft()" onmouseup="stopMove()" ontouchstart="moveleft()">LEFT</button>
+<button id="right" onmousedown="moveright()" onmouseup="stopMove()" ontouchstart="moveright()">RIGHT</button>
+<p>
+<button id="down" onmousedown="movedown()" onmouseup="stopMove()" ontouchstart="movedown()">DOWN</button>
+
     
 </body>
 </html>

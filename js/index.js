@@ -4,7 +4,10 @@ function onLoad() {
     var rootNode, renderVisitor;
     var enemyTest, player;
     var entities = [];
+
+    
     function initialiseContext() {
+        
         canvas = document.getElementById('gameCanvas');
 
         if(!canvas) {
@@ -16,7 +19,25 @@ function onLoad() {
             alert('Error: failed to get context!');
             return;
         }
-
+        
+       /*
+        var myGameArea = {
+            canvas : document.getElementById("gameCanvas"),
+        
+            start : function() {
+                if(!canvas) {
+                    alert ("I can not find the canvas element!");
+                    return;
+                }
+                this.context = this.canvas.getContext('2d');
+                if (!context) {
+                    alert('Error: failed to get context!');
+                    return;
+                }
+                document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+            }
+        }
+        */
         image = new Image();
         
         //Keiron's Polygon & Scenegraph Test
@@ -34,7 +55,6 @@ function onLoad() {
             player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf_walk.png');
             //enemyTest.setTarget(player);
             entities.push(player);
-
         //
     }
 
@@ -62,14 +82,30 @@ function onLoad() {
         originMatrix = setCanvasOrigin();
         rootNode.setLocalTransform(originMatrix);
         renderVisitor.visit(rootNode);
+
+        // TRY CONTROL
+        document.getElementById('down').onclick = function() {
+            var speedY = entities[0].getSpeedY();
+            speedY += 1;
+            entities[1].setSpeedY(speedY);
+        }
+        //
         for (var i = 0; i < entities.length; i++){
             entities[i].draw(originMatrix);
         }
     }
 
+    function startGame() {
+        myGameArea.start();
+        player = new Player(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
+    }
+
     initialiseContext();
+
+    //startGame();
+
     animationLoop();
-    draw(context);
+    //draw();
 }
 
 window.addEventListener('load', onLoad, false);
