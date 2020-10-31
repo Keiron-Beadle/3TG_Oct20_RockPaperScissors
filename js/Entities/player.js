@@ -7,7 +7,7 @@ class Player {
          var mPlayerImage = new Image();
          mPlayerImage.src = this.mSprite;
          this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
-             0, new Vector(1,1,1), mPlayerImage, 10, 270, 270);
+             0, new Vector(1,1,1), mPlayerImage, 10, 270, 270, new Vector(3,3,0));
 
         this.mSpeedX = 0;
         this.mSpeedY = 0;
