@@ -36,7 +36,6 @@ function onLoad() {
             entities.push(enemyTest);
             //player = new Player(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
             //entities.push(player);
-
         //
     }
 
