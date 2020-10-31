@@ -1,4 +1,4 @@
-class TransformNode extends SceneGraphNode{
+class TransformNode extends GroupNode{
     constructor(pTag, pTransformMatrix){
         super(pTag);
         super.setType("Transform");

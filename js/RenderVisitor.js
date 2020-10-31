@@ -7,15 +7,15 @@ class RenderVisitor{
     visit(pNode){
         switch (pNode.getType()){
             case "Group":
-                visitGroup(pNode);
+                this.visitGroup(pNode);
                 break;
             
             case "Transform":
-                visitTransform(pNode);
+                this.visitTransform(pNode);
                 break;
 
             case "Geometry":
-                visitGeometry(pNode);
+                this.visitGeometry(pNode);
                 break;
         }
     }
