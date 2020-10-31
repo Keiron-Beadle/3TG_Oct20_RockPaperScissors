@@ -1,20 +1,23 @@
 class EnemyAI{
-    constructor(){
+    constructor(pVisibility){
         this.RANDOM = 0;
         this.MOVING = 1;
         this.ATTACKING = 2;
+        this.visibility = pVisibility;
         this.states = ["Random", "Moving", "Attacking"];
         this.currentState = this.states[this.RANDOM];
     }
 
     update(pPos, pTarget, pObstacleArray){
         let returnGoal;
-
-        if (visibilityTest(pPos, pTarget, pObstacleArray)){
-            this.currentState = this.states[MOVING];
+        if (Math.floor(pPos.getX()) == Math.floor(pTarget.getPosition().getX())){
+            return pTarget.getPosition();
+        }
+        else if (this.visibilityTest(pPos, pTarget, pObstacleArray)){
+            this.currentState = this.states[this.MOVING];
         }
         else{
-            this.currentState = this.states[RANDOM];
+            this.currentState = this.states[this.RANDOM];
         }
 
         switch(this.currentState){
@@ -32,13 +35,39 @@ class EnemyAI{
     }
 
     visibilityTest(pPos, pTarget, pObstacles){
-        for (var i = 0; i < pObstacles.length; i++)
-        {
-            let eyePos = new Vector(pPos.getX(), pPos.getY() + 30, 0);
-            let vertices = pTarget.getVertices();
-            for (var j = 0; j < vertices.length; j++){
-                let directionVector = eyePos.subtract(vertices[i]);
+        let targetPos = pTarget.getCenterPosition();
+        let vecLine = new Vector(targetPos.getX() - pPos.getX(), targetPos.getY() - pPos.getY(), 0);
+        let distance = vecLine.magnitude();
+        if (distance <= this.visibility){
+            if (pObstacles == undefined){
+                return true;
+            }
+            if (pObstacles.length == 0){
+                return true;
+            }
+            for (var i = 0; i < pObstacles.length; i++){
+
+                let vertices = pObstacles.getVertices();
+                vecLine /= distance;
+                //let dDistLine = vecLine.multiply(new Vector(pPos.getX(), pPos.getY()));
+                let vecPerpendicularLine = new Vector(-vecLine.getY(), vecLine.getX());
+                let dDistPerpendicularLine = vecPerpendicularLine.multiply(new Vector(pPos.getX(), pPos.getY()));
+
+                let dPerpLineDist1 = vecPerpendicularLine.multiply(vertices[0]).subtract(dDistPerpendicularLine);
+                let dPerpLineDist2 = vecPerpendicularLine.multiply(vertices[1]).subtract(dDistPerpendicularLine);
+                let dPerpLineDist3 = vecPerpendicularLine.multiply(vertices[2]).subtract(dDistPerpendicularLine);
+                let dPerpLineDist4 = vecPerpendicularLine.multiply(vertices[3]).subtract(dDistPerpendicularLine);
+
+                let dMinPerpLineDist = Math.min(dPerpLineDist1, dPerpLineDist2, dPerpLineDist3, dPerpLineDist4 );
+                let dMaxPerpLineDist = Math.max(dPerpLineDist1,dPerpLineDist2,dPerpLineDist3,dPerpLineDist4);
                 
+                if (dMinPerpLineDist <= 0 && dMaxPerpLineDist <= 0 ||
+                    dMinPerpLineDist >= 0 && dMaxPerpLineDist >= 0){
+                        return true;
+                }
+                else{
+                    return false;
+                }
             }
         }
     }
@@ -54,11 +83,17 @@ class EnemyAI{
         return new Vector(pPos.getX() + movement, pPos.getY());
     }
 
-    runMoving(pPos){
-
+    runMoving(pPos, pTarget){
+        let targetPos = pTarget.getPosition();
+        if (targetPos.subtract(pPos).magnitude() <= 100){
+           // this.currentState = this.states[this.ATTACKING];
+        }
+        else{
+            return targetPos;
+        }
     }
 
-    runAttacking(pPos){
+    runAttacking(pPos, pTarget){
 
     }
 

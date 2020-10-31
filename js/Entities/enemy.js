@@ -4,13 +4,15 @@ class Enemy{
         this.position = pPositionVec;
         this.mainContext = pMainContext;
         this.projectiles = [];
-        this.speed = 1;
+        this.speed = 0.5;
+        this.visibilityBubble = 200; 
+        this.updateDelay = 600;
         var enemyImage = new Image();
         enemyImage.src = this.sprite;
         this.animatedSpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
             0, new Vector(1,1,1), enemyImage, 4, 270, 270, [2,2]);
 
-        this.AI = new EnemyAI();
+        this.AI = new EnemyAI(this.visibilityBubble);
     }
 
     setTarget(pTarget){
@@ -23,20 +25,23 @@ class Enemy{
 
     update(){
         this.animatedSpriteSheet.update();
-        if (this.goal == null){
+        let currentAIState = this.AI.getState();
+        if (currentAIState != "Random" && this.updateDelay <= 0){
             this.goal = this.AI.update(this.position, this.getTarget());
-            switch(this.AI.getState()){
-                case "Random":
-                    this.speed = 0.3 + Math.random() / 4;
-                    break;
-                default:
-                    this.speed = 1;
-                    break;
-            }
+            this.updateDelay = 600;
+        }
+        else if (this.goal == null){
+            this.goal = this.AI.update(this.position, this.getTarget());
+        }
+        else if (currentAIState == "Random"){
+            this.speed = 0.3 + Math.random() / 4;
         }
         else{
-            this.moveToGoal();
+            this.speed = 1;
         }
+
+        this.moveToGoal();
+        this.updateDelay--;
         //Implement AI updates here
         //Projectiles passed & Position
     }

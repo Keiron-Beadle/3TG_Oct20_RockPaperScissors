@@ -32,7 +32,7 @@ function onLoad() {
             enemyTest = new Enemy(context, new Vector(100,50,1), 'SpriteSheets/Demon-Walk.png');
             entities.push(enemyTest);
             player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf_walk.png');
-            //enemyTest.setTarget(player);
+            enemyTest.setTarget(player);
             entities.push(player);
 
         //

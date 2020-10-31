@@ -13,14 +13,22 @@ class Player {
         this.mSpeedY = 0;
     }
  
-     update(){
+    update(){
          this.mAnimatedSpriteSheet.update();
      }
  
-     draw(pWorldMatrix){
+    draw(pWorldMatrix){
          this.mAnimatedSpriteSheet.draw(pWorldMatrix);
     }   
 
+    getPosition(){
+      return this.mPosition;
+    }
+
+    getCenterPosition(){
+      return new Vector(this.mPosition.getX() + 270 / 2, this.mPosition.getY() + 270 / 2, 0);
+    }
+    
     newPosition() {
         this.mPosition.getX() += this.mSpeedX;
         this.mPosition.getY() += this.mSpeedY;
