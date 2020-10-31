@@ -68,16 +68,6 @@ function onLoad() {
         }
     }
 
-    function drawRect() {       
-        context.beginPath();
-        context.strokeStyle = "black";
-        context.lineWidth = 0.1;
-        context.fillStyle = "red";
-        context.strokeRect(50, 50, 50, 70);
-        context.fillRect(50, 50, 50, 70);
-        context.closePath();
-     }
-
     initialiseContext();
     animationLoop();
     draw(context);
