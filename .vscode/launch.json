@@ -12,6 +12,5 @@
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}"
         }
-    
     ]
 }

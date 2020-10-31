@@ -1,8 +1,9 @@
 function onLoad() {
-    var canvas, context, wereWolf, originMatrix;
-    var werewolfImage, frameSizeX, frameSizeY;
-    var lastTime;
-
+    var canvas, context, newSpriteSheet, originMatrix;
+    var image, frameSizeX, frameSizeY, numFrames;
+    var rootNode, renderVisitor;
+    var enemyTest;
+    var entities = [];
     function initialiseContext() {
         canvas = document.getElementById('gameCanvas');
 
@@ -16,18 +17,24 @@ function onLoad() {
             return;
         }
 
-        //lastTime = Date.now();
+        image = new Image();
+        //image.src = 'SpriteSheets/Beewolf_idle gif.png';
+        //newSpriteSheet = new AnimatedSpriteSheet(context, new Vector(-370, -200, 1), 0, new Vector(1.5, 1.5, 1),
+        //image, numFrames, frameSizeX, frameSizeY);
 
-        werewolfImage = new Image();
-        werewolfImage.src = 'SpriteSheets/Beehive-Idle.png';
+        //Keiron's Polygon & Scenegraph Test
+        renderVisitor = new RenderVisitor(context);
+        var polygonTestVertices = [new Vector(-200, -200), new Vector(100, -50), new Vector(0,0), new Vector(-200, -200)];
+        var polygonTest = new Polygon(polygonTestVertices, "#FFFFFF");
+        var polygonTestNode = new GeometryNode("Polygon Geometry Node", polygonTest);
+        rootNode = new TransformNode("Root", originMatrix);
+        //rootNode.addChild(polygonTestNode);
+        //
 
-        //werewolfImage.src = 'SpriteSheets/Werewolf_walk.png';
-        //werewolfImage.src = 'SpriteSheets/Werewolf_walk.gif';
-        //frameSizeX = werewolfImage.width();
-        //frameSizeY = werewolfImage.height();
-        //wereWolf = new werewolf(new Vector(0, 0, 1), context, werewolfImage, frameSizeX, frameSizeY);
-        wereWolf = new AnimatedSpriteSheet(context, new Vector(0, 0, 1), 0, 1,
-        werewolfImage, 3, 20, 40);
+        //Keiron's Enemy Test
+            enemyTest = new Enemy(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
+            entities.push(enemyTest);
+        //
     }
 
     function setCanvasOrigin(){
@@ -38,23 +45,27 @@ function onLoad() {
     }
 
     function animationLoop() {
-        var thisTime, deltaTime;
-
-        thisTime = Date.now();
-        deltaTime = thisTime - lastTime;
-
-        wereWolf.update(deltaTime);
-        wereWolf.draw(originMatrix);
-
-        lastTime = thisTime;
+        update();
+        draw();
         requestAnimationFrame(animationLoop);
     }
 
+    function update(){
+        //newSpriteSheet.update();
+        for (var i = 0; i < entities.length; i++){
+            entities[i].update();
+        }
+    }
+
     function draw() {
+        context.clearRect(0,0, canvas.width, canvas.height);
         originMatrix = setCanvasOrigin();
-        animationLoop();
-        drawRect();
-        context.drawImage(werewolfImage, 20, 60);
+        rootNode.setLocalTransform(originMatrix);
+        renderVisitor.visit(rootNode);
+        //newSpriteSheet.draw(originMatrix);
+        for (var i = 0; i < entities.length; i++){
+            entities[i].draw(originMatrix);
+        }
     }
 
     function drawRect() {       
@@ -68,8 +79,8 @@ function onLoad() {
      }
 
     initialiseContext();
-
-    draw();
+    animationLoop();
+    draw(context);
 }
 
 window.addEventListener('load', onLoad, false);
