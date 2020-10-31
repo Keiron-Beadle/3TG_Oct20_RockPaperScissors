@@ -83,24 +83,43 @@ function onLoad() {
         rootNode.setLocalTransform(originMatrix);
         renderVisitor.visit(rootNode);
 
-        // TRY CONTROL
+        /* // try Control
         document.getElementById('down').onclick = function() {
             //alert(moveY);
             var moveY = entities[1].getMoveY();
             moveY += 1;
             entities[1].setMoveY(moveY);
         }
-        //
+        */
+       getKeyAndMove(e);
+  
         for (var i = 0; i < entities.length; i++){
             entities[i].draw(originMatrix);
         }
     }
 
+    function getKeyAndMove(e){				
+		var key_code=e.which||e.keyCode;
+		switch(key_code){
+			case 37: //left arrow key
+				player.moveLeft();
+				break;
+			case 38: //Up arrow key
+				player.moveUp();
+				break;
+			case 39: //right arrow key
+				player.moveRight();
+				break;
+			case 40: //down arrow key
+				player.moveDown();
+				break;						
+		}
+    /*
     function startGame() {
         myGameArea.start();
         player = new Player(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
     }
-
+    */
     initialiseContext();
 
     //startGame();
