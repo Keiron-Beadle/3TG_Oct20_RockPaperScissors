@@ -2,8 +2,11 @@ class Player {
     constructor(pMainContext, pPosition, pSprite){
          this.mSprite = pSprite;
          this.mMainContext = pMainContext;
+         this.transformMatrix;
          var mPlayerImage = new Image();
          mPlayerImage.src = this.mSprite;
+         //Constructor
+         // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
          this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
              0, new Vector(1,1,1), mPlayerImage, 10, 270, 270, [3,3]);
 
@@ -15,34 +18,34 @@ class Player {
     setPosition(pPosition) {
         this.mPosition = pPosition;
     }
- 
-    update(){
-         this.mAnimatedSpriteSheet.update();
+
+    //pCanvas needed for when checking player is inside boundaries, and if not, prevent movement
+    //pObstacles for collision
+    update(pCanvas, pObstacles, pWorldMatrix){
+        this.newPosition(pWorldMatrix); //New position is meant to run when player inputs new direction
+        this.mAnimatedSpriteSheet.update();
     }
-    draw(pWorldMatrix){
-        var transformMatrix = this.newPosition(pWorldMatrix);
-        this.mAnimatedSpriteSheet.draw(transformMatrix);
-        //this.mAnimatedSpriteSheet.draw(pWorldMatrix);
+    draw(){
+        this.mAnimatedSpriteSheet.draw(this.transformMatrix);
     }
 
     newPosition(pWorldMatrix) {
-        var x, y, translate, transform, newPosition;
+        var x, y, translate, newPosition;
 
-        x = this.getPosition().getX();
-        y = this.getPosition().getY();
+        x = this.mPosition.getX();
+        //x += this.getMoveX();
+        y = this.mPosition.getY();
+        //y += this.getMoveY();
 
         newPosition = new Vector(x, y, 1);
 
         translate = Matrix.createTranslation(newPosition);
-        transform = pWorldMatrix.multiply(translate);
-        
-        return transform;
+        this.transformMatrix = pWorldMatrix.multiply(translate);
     }
 
     getCenterPosition(){
       return new Vector(this.getPosition().getX() + 270 / 2, this.getPosition().getY() + 270 / 2, 0);
     }
-    
     getVertices(){
         let posX = this.getPosition().getX();
         let posY = this.getPosition().getY();
