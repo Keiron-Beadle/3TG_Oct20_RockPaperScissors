@@ -24,8 +24,8 @@ class EnemyAI{
     }
 
     runRandom(pPos){
-        let movement = Math.random();
-        if (movement == 0){
+        let movement = Math.floor(Math.random() * 10);
+        if (movement <= 5){
             movement = 10 -Math.random() *100;
         }
         else{
@@ -40,5 +40,9 @@ class EnemyAI{
 
     runAttacking(pPos){
 
+    }
+
+    getState(){
+        return this.currentState;
     }
 }

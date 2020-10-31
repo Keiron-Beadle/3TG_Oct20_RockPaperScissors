@@ -25,6 +25,14 @@ class Enemy{
         this.animatedSpriteSheet.update();
         if (this.goal == null){
             this.goal = this.AI.update(this.position, this.getTarget());
+            switch(this.AI.getState()){
+                case "Random":
+                    this.speed = 0.3 + Math.random() / 4;
+                    break;
+                default:
+                    this.speed = 1;
+                    break;
+            }
         }
         else{
             this.moveToGoal();
