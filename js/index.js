@@ -2,7 +2,7 @@ function onLoad() {
     var canvas, context, originMatrix;
     var image;
     var rootNode, renderVisitor;
-    var enemyTest;
+    var enemyTest, player;
     var entities = [];
     function initialiseContext() {
         canvas = document.getElementById('gameCanvas');
@@ -31,6 +31,9 @@ function onLoad() {
         //Keiron's Enemy Test
             enemyTest = new Enemy(context, new Vector(-500,0,1), 'SpriteSheets/Werewolf-Walk.png');
             entities.push(enemyTest);
+            //player = new Player(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
+            //entities.push(player);
+
         //
     }
 
