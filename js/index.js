@@ -4,7 +4,7 @@ function onLoad() {
     var rootNode, renderVisitor;
     var enemyTest, player;
     var entities = [];
-
+    var obstacles = [];
     
     function initialiseContext() {
         
@@ -19,7 +19,6 @@ function onLoad() {
             alert('Error: failed to get context!');
             return;
         }
-        
        /*
         var myGameArea = {
             canvas : document.getElementById("gameCanvas"),
@@ -39,22 +38,22 @@ function onLoad() {
         }
         */
         image = new Image();
-        
-        //Keiron's Polygon & Scenegraph Test
+        originMatrix = setCanvasOrigin();
         renderVisitor = new RenderVisitor(context);
-        var polygonTestVertices = [new Vector(-200, -200), new Vector(100, -50), new Vector(0,0), new Vector(-200, -200)];
-        var polygonTest = new Polygon(polygonTestVertices, "#FFFFFF");
-        var polygonTestNode = new GeometryNode("Polygon Geometry Node", polygonTest);
         rootNode = new TransformNode("Root", originMatrix);
+        //Keiron's Polygon & Scenegraph Test
+        //var polygonTestVertices = [new Vector(-200, -200), new Vector(100, -50), new Vector(0,0), new Vector(-200, -200)];
+        //var polygonTest = new Polygon(polygonTestVertices, "#FFFFFF");
+        //var polygonTestNode = new GeometryNode("Polygon Geometry Node", polygonTest);
         //rootNode.addChild(polygonTestNode);
         //
 
         //Keiron's Enemy Test
-            enemyTest = new Enemy(context, new Vector(500,50,1), 'SpriteSheets/Demon-Walk.png');
-            entities.push(enemyTest);
-            player = new Player(context, new Vector(-500,0,1), 'SpriteSheets/Werewolf_walk.png');
-            enemyTest.setTarget(player);
-            entities.push(player);
+        enemyTest = new Enemy(context, new Vector(100,50,1), 'SpriteSheets/Demon-Walk.png');
+        player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf_walk.png');
+        entities.push(enemyTest);
+        entities.push(player);
+        enemyTest.setTarget(player);
         //
     }
 
@@ -73,14 +72,12 @@ function onLoad() {
 
     function update(){
         for (var i = 0; i < entities.length; i++){
-            entities[i].update(canvas);
+            entities[i].update(canvas, obstacles, originMatrix);
         }
     }
 
     function draw() {
         context.clearRect(-canvas.width / 2, - canvas.height / 2, canvas.width, canvas.height);
-        originMatrix = setCanvasOrigin();
-        rootNode.setLocalTransform(originMatrix);
         renderVisitor.visit(rootNode);
 
         // TRY CONTROL
@@ -92,7 +89,7 @@ function onLoad() {
         }
         //
         for (var i = 0; i < entities.length; i++){
-            entities[i].draw(originMatrix);
+            entities[i].draw();
         }
     }
 
