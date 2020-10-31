@@ -1,7 +1,7 @@
 function onLoad() {
-    var canvas, context, newSpriteSheet, originMatrix;
-    var image, frameSizeX, frameSizeY, numFrames;
-
+    var canvas, context, wereWolf, originMatrix;
+    var werewolfImage, frameSizeX, frameSizeY;
+    var lastTime;
 
     function initialiseContext() {
         canvas = document.getElementById('gameCanvas');
@@ -16,10 +16,18 @@ function onLoad() {
             return;
         }
 
-        image = new Image();
-        image.src = 'SpriteSheets/.png';
-        newSpriteSheet = new AnimatedSpriteSheet(context, new Vector(-370, -200, 1), 0, new Vector(1.5, 1.5, 1),
-        image, numFrames, frameSizeX, frameSizeY);
+        //lastTime = Date.now();
+
+        werewolfImage = new Image();
+        werewolfImage.src = 'SpriteSheets/Beehive-Idle.png';
+
+        //werewolfImage.src = 'SpriteSheets/Werewolf_walk.png';
+        //werewolfImage.src = 'SpriteSheets/Werewolf_walk.gif';
+        //frameSizeX = werewolfImage.width();
+        //frameSizeY = werewolfImage.height();
+        //wereWolf = new werewolf(new Vector(0, 0, 1), context, werewolfImage, frameSizeX, frameSizeY);
+        wereWolf = new AnimatedSpriteSheet(context, new Vector(0, 0, 1), 0, 1,
+        werewolfImage, 3, 20, 40);
     }
 
     function setCanvasOrigin(){
@@ -30,19 +38,38 @@ function onLoad() {
     }
 
     function animationLoop() {
-        newSpriteSheet.update();
-        newSpriteSheet.draw(originMatrix);
+        var thisTime, deltaTime;
+
+        thisTime = Date.now();
+        deltaTime = thisTime - lastTime;
+
+        wereWolf.update(deltaTime);
+        wereWolf.draw(originMatrix);
+
+        lastTime = thisTime;
         requestAnimationFrame(animationLoop);
     }
 
     function draw() {
         originMatrix = setCanvasOrigin();
         animationLoop();
+        drawRect();
+        context.drawImage(werewolfImage, 20, 60);
     }
+
+    function drawRect() {       
+        context.beginPath();
+        context.strokeStyle = "black";
+        context.lineWidth = 0.1;
+        context.fillStyle = "red";
+        context.strokeRect(50, 50, 50, 70);
+        context.fillRect(50, 50, 50, 70);
+        context.closePath();
+     }
 
     initialiseContext();
 
-    draw(context);
+    draw();
 }
 
 window.addEventListener('load', onLoad, false);
