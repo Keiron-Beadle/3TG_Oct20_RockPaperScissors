@@ -17,7 +17,7 @@ function onLoad() {
         }
 
         image = new Image();
-        image.src = 'SpriteSheets/.png';
+        //image.src = 'SpriteSheets/Beewolf_idle gif.png';
         newSpriteSheet = new AnimatedSpriteSheet(context, new Vector(-370, -200, 1), 0, new Vector(1.5, 1.5, 1),
         image, numFrames, frameSizeX, frameSizeY);
     }
