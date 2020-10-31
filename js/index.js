@@ -7,7 +7,7 @@ function onLoad() {
 
     
     function initialiseContext() {
-        /*
+        
         canvas = document.getElementById('gameCanvas');
 
         if(!canvas) {
@@ -19,7 +19,8 @@ function onLoad() {
             alert('Error: failed to get context!');
             return;
         }
-        */
+        
+       /*
         var myGameArea = {
             canvas : document.getElementById("gameCanvas"),
         
@@ -35,9 +36,8 @@ function onLoad() {
             }
               document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         }
+        */
     }
-
-
         image = new Image();
         
         //Keiron's Polygon & Scenegraph Test
@@ -93,7 +93,7 @@ function onLoad() {
 
     initialiseContext();
 
-    startGame();
+    //startGame();
 
     animationLoop();
     draw(context);
