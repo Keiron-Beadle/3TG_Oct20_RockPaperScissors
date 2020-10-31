@@ -7,8 +7,16 @@ class EnemyAI{
         this.currentState = this.states[this.RANDOM];
     }
 
-    update(pPos, pTarget){
+    update(pPos, pTarget, pObstacleArray){
         let returnGoal;
+
+        //if (visibilityTest(pPos, pTarget, pObstacleArray)){
+       //     this.currentState = this.states[MOVING];
+       // }
+        //else{
+       //     this.currentState = this.states[RANDOM];
+      //  }
+
         switch(this.currentState){
             case this.states[this.RANDOM]:
                 returnGoal = this.runRandom(pPos);
@@ -21,6 +29,18 @@ class EnemyAI{
                 break
         }
         return returnGoal;
+    }
+
+    visibilityTest(pPos, pTarget, pObstacles){
+        for (var i = 0; i < pObstacles.length; i++)
+        {
+            let eyePos = new Vector(pPos.getX(), pPos.getY() + 30, 0);
+            let vertices = pTarget.getVertices();
+            for (var j = 0; j < vertices.length; j++){
+                let directionVector = eyePos.subtract(vertices[i]);
+                
+            }
+        }
     }
 
     runRandom(pPos){
