@@ -12,8 +12,28 @@ class Enemy{
 
         var enemyImage = new Image();
         enemyImage.src = this.sprite;
-        this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
-            0, new Vector(1,1,1), enemyImage, 4, 270, 270, [2,2]);
+
+        if(pSprite == "SpriteSheets/Demon-Walk.png"){
+            this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
+                0, new Vector(1,1,1), enemyImage, 4, 270, 270, [2,2]);
+         }
+        else if(pSprite == "SpriteSheets/Demon-Spawn.png"){
+            this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
+                0, new Vector(1,1,1), enemyImage, 4, 270, 270, [2,2]);
+         }
+         else if(pSprite == "SpriteSheets/Demon-Pumpkin.png"){
+            this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
+                0, new Vector(1,1,1), enemyImage, 10, 270, 270, [3,4]);
+         }
+         else if(pSprite == "SpriteSheets/Demon-Death.png"){
+            this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
+                0, new Vector(1,1,1), enemyImage, 9, 270, 270, [3,3]);
+         }
+         else if(pSprite == "SpriteSheets/Demon-Bat.png"){
+            this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
+                0, new Vector(1,1,1), enemyImage, 14, 270, 270, [4,4]);
+         }
+        
 
         this.AI = new EnemyAI(this.visibilityBubble);
     }

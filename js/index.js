@@ -49,8 +49,8 @@ function onLoad() {
         //
 
         //Keiron's Enemy Test
-        enemyTest = new Enemy(context, new Vector(100,50,1), 'SpriteSheets/Demon-Walk.png');
-        player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf_walk.png');
+        enemyTest = new Enemy(context, new Vector(100,50,1), 'SpriteSheets/Demon-Bat.png');
+        player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Beewolf-DoubleJump.png');
         entities.push(enemyTest);
         entities.push(player);
         enemyTest.setTarget(player);
