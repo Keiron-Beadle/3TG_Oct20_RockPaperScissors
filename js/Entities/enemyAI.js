@@ -102,7 +102,7 @@ class EnemyAI{
     }
 
     runAttacking(pTarget){
-        return pTarget.getCenterPosition();
+        return pTarget.getPosition();
     }
 
     getState(){

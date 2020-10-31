@@ -1,6 +1,5 @@
 class Player {
     constructor(pMainContext, pPositionVec, pSprite){
-        // this.loaded = false;
          this.mSprite = pSprite;
          this.mPosition = pPositionVec;
          this.mMainContext = pMainContext;
@@ -11,6 +10,15 @@ class Player {
 
         this.mSpeedX = 0;
         this.mSpeedY = 0;
+    }
+
+    getVertices(){
+      let posX = this.mPosition.getX();
+      let posY = this.mPosition.getY();
+      return [new Vector(posX, poY, 0),
+              new Vector(posX + 270, posY, 0),
+              new Vector(posX + 270, posY - 270, 0),
+              new Vector(posX, posY - 270, 0)];
     }
  
     update(){

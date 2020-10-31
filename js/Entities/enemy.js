@@ -5,7 +5,7 @@ class Enemy{
         this.mainContext = pMainContext;
         this.speed = 0.8;
         this.projectiles = [];
-        this.visibilityBubble = 400; 
+        this.visibilityBubble = 400; //400
         this.updateDelay = 400;
         this.attackDelay = 800;
 
@@ -60,7 +60,7 @@ class Enemy{
     }
 
     attack(){
-        this.projectiles.push(new Pumpkin(pTarget));
+        //this.projectiles.push(new Pumpkin(pTarget));
     }
 
     moveToGoal(){

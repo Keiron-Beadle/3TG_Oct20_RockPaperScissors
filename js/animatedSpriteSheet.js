@@ -1,11 +1,11 @@
 class AnimatedSpriteSheet {
-    constructor(pContext, pPosition, pRotation, pScale, pImage, pNumFrames, pFrameSizeX, pFrameSizeY, pNumOfSpritesDimensions) { 
+    constructor(pContext, pPosition, pRotation, pScale, pImage, pNumFrames, pFrameSizeX, pFrameSizeY, pNumOfImagesDimensions) { 
         this.mContext = pContext;
         this.mImage = pImage;
         this.mNumFrames = pNumFrames;
         this.mFrameSizeX = pFrameSizeX;
         this.mFrameSizeY = pFrameSizeY;
-        this.numOfSpritesDimensions = pNumOfSpritesDimensions;
+        this.imageCountDimensions = [pNumOfImagesDimensions[0], pNumOfImagesDimensions[1]];
         this.mFrameIndex = 0;
         //this.mUpdateCounter = 0;
         //this.mUpdateLimit = 650;
@@ -59,8 +59,8 @@ class AnimatedSpriteSheet {
         frameWidth = this.mFrameSizeX; 
         frameHeight = this.mFrameSizeY;    
 
-        frameX =  (this.mFrameIndex % this.numOfSpritesDimensions[0]) * frameWidth;
-        frameY = Math.floor((this.mFrameIndex / this.numOfSpritesDimensions[1])) * frameHeight;    
+        frameX =  (this.mFrameIndex % this.imageCountDimensions[0]) * frameWidth;
+        frameY = Math.floor((this.mFrameIndex / this.imageCountDimensions[1])) * frameHeight;    
 
         this.mContext.drawImage(this.mImage, frameX, frameY, this.mFrameSizeX, this.mFrameSizeY,
             0, 0, frameWidth, frameHeight);
