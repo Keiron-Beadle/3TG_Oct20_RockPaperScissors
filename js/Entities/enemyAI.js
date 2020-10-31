@@ -101,7 +101,7 @@ class EnemyAI{
     runMoving(pPos, pTarget, pCanvas){
         pTarget.getTransformedPosition().setTransform(pCanvas.getContext('2d'));
         let targetPos = pTarget.getPosition();
-        if (targetPos.subtract(pPos).magnitude() <= 300){
+        if (targetPos.subtract(pPos).magnitude() <= 450){
             this.currentState = this.states[this.ATTACKING];
             return this.runAttacking(pTarget);
         }
