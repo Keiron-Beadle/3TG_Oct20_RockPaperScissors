@@ -1,22 +1,52 @@
-class Werewolf {
+class Player {
     constructor(pMainContext, pPositionVec, pSprite){
         // this.loaded = false;
-         this.sprite = pSprite;
-         this.position = pPositionVec;
-         this.mainContext = pMainContext;
-         var enemyImage = new Image();
-         enemyImage.src = this.sprite;
-         this.animatedSpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
-             0, new Vector(1,1,1), enemyImage, 10, 270, 270);
-     }
+         this.mSprite = pSprite;
+         this.mPosition = pPositionVec;
+         this.mMainContext = pMainContext;
+         var mPlayerImage = new Image();
+         mPlayerImage.src = this.mSprite;
+         this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+             0, new Vector(1,1,1), mPlayerImage, 10, 270, 270);
+
+        this.mSpeedX = 0;
+        this.mSpeedY = 0;
+    }
  
      update(){
-         this.animatedSpriteSheet.update();
+         this.mAnimatedSpriteSheet.update();
      }
  
      draw(pWorldMatrix){
-         this.animatedSpriteSheet.draw(pWorldMatrix);
+         this.mAnimatedSpriteSheet.draw(pWorldMatrix);
     }   
+
+    newPosition() {
+        this.mPosition.getX() += this.mSpeedX;
+        this.mPosition.getY() += this.mSpeedY;
+      }
+    
+    updateGameArea() {
+      myGameArea.clear();
+      myGamePiece.newPos();
+      myGamePiece.update();
+    }
+    
+    moveup() {
+      myGamePiece.mSpeedY -= 1;
+    }
+    
+    movedown() {
+      myGamePiece.mSpeedY += 1;
+    }
+    
+    moveleft() {
+      myGamePiece.mSpeedX -= 1;
+    }
+    
+    moveright() {
+      myGamePiece.mSpeedX += 1;
+    }
 }
     
     

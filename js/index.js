@@ -2,7 +2,7 @@ function onLoad() {
     var canvas, context, newSpriteSheet, originMatrix;
     var image, frameSizeX, frameSizeY, numFrames;
     var rootNode, renderVisitor;
-    var enemyTest;
+    var enemyTest, player;
     var entities = [];
     function initialiseContext() {
         canvas = document.getElementById('gameCanvas');
@@ -17,7 +17,7 @@ function onLoad() {
             return;
         }
 
-        image = new Image();
+        //image = new Image();
         //image.src = 'SpriteSheets/Beewolf_idle gif.png';
         //newSpriteSheet = new AnimatedSpriteSheet(context, new Vector(-370, -200, 1), 0, new Vector(1.5, 1.5, 1),
         //image, numFrames, frameSizeX, frameSizeY);
@@ -34,6 +34,9 @@ function onLoad() {
         //Keiron's Enemy Test
             enemyTest = new Enemy(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
             entities.push(enemyTest);
+            //player = new Player(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
+            //entities.push(player);
+
         //
     }
 
