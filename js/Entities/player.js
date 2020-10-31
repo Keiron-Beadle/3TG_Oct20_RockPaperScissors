@@ -6,6 +6,8 @@ class Player {
          this.transformMatrix;
          var mPlayerImage = new Image();
          mPlayerImage.src = this.mSprite;
+         //Constructor
+         // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
          this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
              0, new Vector(1,1,1), mPlayerImage, 10, 270, 270, [3,3]);
 
@@ -34,7 +36,7 @@ class Player {
     //pCanvas needed for when checking player is inside boundaries, and if not, prevent movement
     //pObstacles for collision
     update(pCanvas, pObstacles, pWorldMatrix){
-        this.newPosition(pWorldMatrix);
+        this.newPosition(pWorldMatrix); //New position is meant to run when player inputs new direction
         this.mAnimatedSpriteSheet.update();
     }
     draw(){

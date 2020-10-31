@@ -72,7 +72,7 @@ function onLoad() {
 
     function update(){
         for (var i = 0; i < entities.length; i++){
-            entities[i].update(canvas, obstacles, originMatrix);
+            entities[i].update(canvas, obstacles, originMatrix); //Update all entities i.e. enemy/player
         }
     }
 
@@ -89,7 +89,7 @@ function onLoad() {
         }
         //
         for (var i = 0; i < entities.length; i++){
-            entities[i].draw();
+            entities[i].draw(); //Draw all entities i.e. enemy/player
         }
     }
 
