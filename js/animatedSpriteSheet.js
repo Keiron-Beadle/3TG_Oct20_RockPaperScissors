@@ -59,8 +59,8 @@ class AnimatedSpriteSheet {
         frameWidth = this.mFrameSizeX; 
         frameHeight = this.mFrameSizeY;    
 
-        frameX =  (this.mFrameIndex % this.numOfSpritesDimensions.getX()) * frameWidth;
-        frameY = Math.floor((this.mFrameIndex / this.numOfSpritesDimensions.getY())) * frameHeight;    
+        frameX =  (this.mFrameIndex % this.numOfSpritesDimensions[0]) * frameWidth;
+        frameY = Math.floor((this.mFrameIndex / this.numOfSpritesDimensions[1])) * frameHeight;    
 
         this.mContext.drawImage(this.mImage, frameX, frameY, this.mFrameSizeX, this.mFrameSizeY,
             0, 0, frameWidth, frameHeight);
@@ -75,8 +75,8 @@ class AnimatedSpriteSheet {
         delay = 100;
        
             if (deltaTime >= delay) {
-                if (this.mFrameIndex >= this.mNumFrames-1) { //Possible issue here for some animations, the -1 
-                    this.mFrameIndex = 0;                   //and >= might cut off a frame.
+                if (this.mFrameIndex >= this.mNumFrames-1) { 
+                    this.mFrameIndex = 0;                   
                 }
                 else {
                     this.mFrameIndex += 1;

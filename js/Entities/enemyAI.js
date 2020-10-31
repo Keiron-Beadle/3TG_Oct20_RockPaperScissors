@@ -10,12 +10,12 @@ class EnemyAI{
     update(pPos, pTarget, pObstacleArray){
         let returnGoal;
 
-        //if (visibilityTest(pPos, pTarget, pObstacleArray)){
-       //     this.currentState = this.states[MOVING];
-       // }
-        //else{
-       //     this.currentState = this.states[RANDOM];
-      //  }
+        if (visibilityTest(pPos, pTarget, pObstacleArray)){
+            this.currentState = this.states[MOVING];
+        }
+        else{
+            this.currentState = this.states[RANDOM];
+        }
 
         switch(this.currentState){
             case this.states[this.RANDOM]:
