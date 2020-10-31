@@ -8,7 +8,7 @@ class Enemy{
         this.visibilityBubble = 400; //How far he can see
         this.updateDelay = 400; //Delay between running pathfinding algorithm, if i did this every frame we'd stutter
         this.attackDelay = 800; //Delay between attacks once in "Attack" mode.
-        this.transformMatrix; //Transform of the enemy
+        this.transformMatrix = Matrix.createIdentity(); //Transform of the enemy
 
         var enemyImage = new Image();
         enemyImage.src = this.sprite;
@@ -50,7 +50,7 @@ class Enemy{
             this.speed = 0.3 + Math.random() / 4;
         }
         else{
-            this.speed = 0.7;
+            this.speed = 1;
         }
 
         for (var i = 0; i < this.projectiles.length; i++)
@@ -75,13 +75,15 @@ class Enemy{
             this.goal = null;
             return;
         }
-        else if (this.position.getX() < this.goal.getX()){         
-            translate = Matrix.createTranslation(new Vector(this.position.getX() + this.speed,0,1));
+        else if (this.position.getX() < this.goal.getX()){    
+            this.position = this.position.add(new Vector(this.speed, 0, 0));
+            translate = Matrix.createTranslation(this.position);
         }
         else if (this.position.getX() > this.goal.getX()){
-            translate = Matrix.createTranslation(new Vector(this.position.getX() - this.speed,0,1));
+            this.position = this.position.add(new Vector(-this.speed, 0, 0));
+            translate = Matrix.createTranslation(this.position);
         }
-        //Make new transform matrix depending on if we need to go left or right. 
+        //Make new transform matrix depending on if we need to go left or right.
         this.transformMatrix = pWorldMat.multiply(translate);
     }
 

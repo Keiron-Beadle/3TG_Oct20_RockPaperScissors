@@ -19,6 +19,10 @@ class Player {
         this.mPosition = pPosition;
     }
 
+    getTransformedPosition(){
+        return this.mTransformMatrix;
+    }
+
     //pCanvas needed for when checking player is inside boundaries, and if not, prevent movement
     //pObstacles for collision
     update(pCanvas, pObstacles, pWorldMatrix){
@@ -46,7 +50,7 @@ class Player {
         return new Vector(this.getPosition().getX() + 270 / 2, this.getPosition().getY() + 270 / 2, 0);
     }
     
-     getVertices(){
+    getVertices(){
           let posX = this.getPosition().getX();
           let posY = this.getPosition().getY();
           return [new Vector(posX, poY, 0),
