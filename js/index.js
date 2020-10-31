@@ -58,6 +58,7 @@ function onLoad() {
     }
 
     function draw() {
+        context.clearRect(0,0, canvas.width, canvas.height);
         originMatrix = setCanvasOrigin();
         rootNode.setLocalTransform(originMatrix);
         renderVisitor.visit(rootNode);
