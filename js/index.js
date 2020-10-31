@@ -2,7 +2,8 @@ function onLoad() {
     var canvas, context, newSpriteSheet, originMatrix;
     var image, frameSizeX, frameSizeY, numFrames;
     var rootNode, renderVisitor;
-
+    var enemyTest;
+    var entities = [];
     function initialiseContext() {
         canvas = document.getElementById('gameCanvas');
 
@@ -18,8 +19,8 @@ function onLoad() {
 
         image = new Image();
         //image.src = 'SpriteSheets/Beewolf_idle gif.png';
-        newSpriteSheet = new AnimatedSpriteSheet(context, new Vector(-370, -200, 1), 0, new Vector(1.5, 1.5, 1),
-        image, numFrames, frameSizeX, frameSizeY);
+        //newSpriteSheet = new AnimatedSpriteSheet(context, new Vector(-370, -200, 1), 0, new Vector(1.5, 1.5, 1),
+        //image, numFrames, frameSizeX, frameSizeY);
 
         //Keiron's Polygon & Scenegraph Test
         renderVisitor = new RenderVisitor(context);
@@ -27,7 +28,12 @@ function onLoad() {
         var polygonTest = new Polygon(polygonTestVertices, "#FFFFFF");
         var polygonTestNode = new GeometryNode("Polygon Geometry Node", polygonTest);
         rootNode = new TransformNode("Root", originMatrix);
-        rootNode.addChild(polygonTestNode);
+        //rootNode.addChild(polygonTestNode);
+        //
+
+        //Keiron's Enemy Test
+            enemyTest = new Enemy(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
+            entities.push(enemyTest);
         //
     }
 
@@ -39,20 +45,31 @@ function onLoad() {
     }
 
     function animationLoop() {
-        newSpriteSheet.update();
-        newSpriteSheet.draw(originMatrix);
+        update();
+        draw();
         requestAnimationFrame(animationLoop);
     }
 
+    function update(){
+        //newSpriteSheet.update();
+        for (var i = 0; i < entities.length; i++){
+            entities[i].update();
+        }
+    }
+
     function draw() {
+        context.clearRect(0,0, canvas.width, canvas.height);
         originMatrix = setCanvasOrigin();
         rootNode.setLocalTransform(originMatrix);
         renderVisitor.visit(rootNode);
-        animationLoop();
+        //newSpriteSheet.draw(originMatrix);
+        for (var i = 0; i < entities.length; i++){
+            entities[i].draw(originMatrix);
+        }
     }
 
     initialiseContext();
-
+    animationLoop();
     draw(context);
 }
 
