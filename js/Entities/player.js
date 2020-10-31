@@ -1,20 +1,20 @@
 class Player {
     constructor(pMainContext, pPosition, pSprite){
-        this.setPosition(pPosition);
-        this.mSprite = pSprite;
-        this.mMainContext = pMainContext;
-        this.mTransformMatrix;
-        var mPlayerImage = new Image();
-        mPlayerImage.src = this.mSprite;
-        //Constructor
-        // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
-        this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+         this.setPosition(pPosition);
+         this.mSprite = pSprite;
+         this.mMainContext = pMainContext;
+         this.mTransformMatrix;
+         var mPlayerImage = new Image();
+         mPlayerImage.src = this.mSprite;
+         //Constructor
+         // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
+         this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
              0, new Vector(1,1,1), mPlayerImage, 10, 270, 270, [3,3]);
 
     }
     getPosition(){
         return this.mPosition;
-      }
+    }
     setPosition(pPosition) {
         this.mPosition = pPosition;
     }
@@ -27,7 +27,7 @@ class Player {
     }
     draw(){
         this.mAnimatedSpriteSheet.draw(this.mTransformMatrix);
-    }
+    }   
 
     newPosition(pWorldMatrix) {
         var x, y, translate, newPosition;
@@ -41,18 +41,20 @@ class Player {
         this.mTransformMatrix = pWorldMatrix.multiply(translate);
     }
 
-    getCenterPosition(){
-      return new Vector(this.getPosition().getX() + 270 / 2, this.getPosition().getY() + 270 / 2, 0);
-    }
-    getVertices(){
-        let posX = this.getPosition().getX();
-        let posY = this.getPosition().getY();
-        return [new Vector(posX, poY, 0),
-                new Vector(posX + 270, posY, 0),
-                new Vector(posX + 270, posY - 270, 0),
-                new Vector(posX, posY - 270, 0)];
-    }
 
+    getCenterPosition(){
+        return new Vector(this.getPosition().getX() + 270 / 2, this.getPosition().getY() + 270 / 2, 0);
+    }
+    
+     getVertices(){
+          let posX = this.getPosition().getX();
+          let posY = this.getPosition().getY();
+          return [new Vector(posX, poY, 0),
+                  new Vector(posX + 270, posY, 0),
+                  new Vector(posX + 270, posY - 270, 0),
+                  new Vector(posX, posY - 270, 0)];
+    }
+  
     moveUp() {
         var y = this.getPosition();
         y -= 1;
@@ -99,6 +101,13 @@ class Player {
     }
     */
 }
-   
+
+ 
 
 
+
+
+
+
+
+    
