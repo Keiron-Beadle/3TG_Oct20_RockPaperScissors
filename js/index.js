@@ -4,7 +4,10 @@ function onLoad() {
     var rootNode, renderVisitor;
     var enemyTest, player;
     var entities = [];
+
+    
     function initialiseContext() {
+        /*
         canvas = document.getElementById('gameCanvas');
 
         if(!canvas) {
@@ -16,6 +19,24 @@ function onLoad() {
             alert('Error: failed to get context!');
             return;
         }
+        */
+        var myGameArea = {
+            canvas : document.getElementById("gameCanvas"),
+        
+            start : function() {
+            if(!canvas) {
+                alert ("I can not find the canvas element!");
+                return;
+            }
+            this.context = this.canvas.getContext('2d');
+            if (!context) {
+                alert('Error: failed to get context!');
+                return;
+            }
+              document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        }
+    }
+
 
         //image = new Image();
         //image.src = 'SpriteSheets/Beewolf_idle gif.png';
@@ -70,7 +91,15 @@ function onLoad() {
         }
     }
 
+    function startGame() {
+        myGameArea.start();
+        player = new Player(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
+    }
+
     initialiseContext();
+
+    startGame();
+
     animationLoop();
     draw(context);
 }

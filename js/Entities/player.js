@@ -28,24 +28,29 @@ class Player {
     
     updateGameArea() {
       myGameArea.clear();
-      myGamePiece.newPos();
-      myGamePiece.update();
+      this.mAnimatedSpriteSheet.newPos();
+      this.mAnimatedSpriteSheet.update();
     }
     
     moveup() {
-      myGamePiece.mSpeedY -= 1;
+        this.mAnimatedSpriteSheet.mSpeedY -= 1;
     }
     
     movedown() {
-      myGamePiece.mSpeedY += 1;
+        this.mAnimatedSpriteSheet.mSpeedY += 1;
     }
     
     moveleft() {
-      myGamePiece.mSpeedX -= 1;
+        this.mAnimatedSpriteSheet.mSpeedX -= 1;
     }
     
     moveright() {
-      myGamePiece.mSpeedX += 1;
+        this.mAnimatedSpriteSheet.mSpeedX += 1;
+    }
+
+    stopMove() {
+        this.mAnimatedSpriteSheet.speedX = 0;
+        this.mAnimatedSpriteSheet.speedY = 0;
     }
 }
     
