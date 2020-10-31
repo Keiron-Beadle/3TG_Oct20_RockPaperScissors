@@ -1,5 +1,3 @@
-
-
 function onLoad() {
     var canvas, context, newSpriteSheet, originMatrix;
     var image, frameSizeX, frameSizeY, numFrames;
