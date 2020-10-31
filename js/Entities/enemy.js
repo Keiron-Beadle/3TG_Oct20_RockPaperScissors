@@ -8,7 +8,7 @@ class Enemy{
         var enemyImage = new Image();
         enemyImage.src = this.sprite;
         this.animatedSpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
-            0, new Vector(1,1,1), enemyImage, 10, 270, 270);
+            0, new Vector(1,1,1), enemyImage, 4, 270, 270, new Vector(2,2,0));
 
         this.AI = new EnemyAI();
     }
@@ -25,6 +25,14 @@ class Enemy{
         this.animatedSpriteSheet.update();
         if (this.goal == null){
             this.goal = this.AI.update(this.position, this.getTarget());
+            switch(this.AI.getState()){
+                case "Random":
+                    this.speed = 0.3 + Math.random() / 4;
+                    break;
+                default:
+                    this.speed = 1;
+                    break;
+            }
         }
         else{
             this.moveToGoal();
