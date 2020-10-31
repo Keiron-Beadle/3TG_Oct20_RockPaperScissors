@@ -1,6 +1,6 @@
 function onLoad() {
-    var canvas, context, newSpriteSheet, originMatrix;
-    var image, frameSizeX, frameSizeY, numFrames;
+    var canvas, context, originMatrix;
+    var image;
     var rootNode, renderVisitor;
     var enemyTest, player;
     var entities = [];
@@ -17,11 +17,8 @@ function onLoad() {
             return;
         }
 
-        //image = new Image();
-        //image.src = 'SpriteSheets/Beewolf_idle gif.png';
-        //newSpriteSheet = new AnimatedSpriteSheet(context, new Vector(-370, -200, 1), 0, new Vector(1.5, 1.5, 1),
-        //image, numFrames, frameSizeX, frameSizeY);
-
+        image = new Image();
+        
         //Keiron's Polygon & Scenegraph Test
         renderVisitor = new RenderVisitor(context);
         var polygonTestVertices = [new Vector(-200, -200), new Vector(100, -50), new Vector(0,0), new Vector(-200, -200)];
@@ -32,7 +29,7 @@ function onLoad() {
         //
 
         //Keiron's Enemy Test
-            enemyTest = new Enemy(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
+            enemyTest = new Enemy(context, new Vector(-500,0,1), 'SpriteSheets/Werewolf-Walk.png');
             entities.push(enemyTest);
             //player = new Player(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
             //entities.push(player);
@@ -54,18 +51,16 @@ function onLoad() {
     }
 
     function update(){
-        //newSpriteSheet.update();
         for (var i = 0; i < entities.length; i++){
             entities[i].update();
         }
     }
 
     function draw() {
-        context.clearRect(0,0, canvas.width, canvas.height);
+        context.clearRect(-canvas.width / 2, - canvas.height / 2, canvas.width, canvas.height);
         originMatrix = setCanvasOrigin();
         rootNode.setLocalTransform(originMatrix);
         renderVisitor.visit(rootNode);
-        //newSpriteSheet.draw(originMatrix);
         for (var i = 0; i < entities.length; i++){
             entities[i].draw(originMatrix);
         }
