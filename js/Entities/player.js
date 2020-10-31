@@ -1,9 +1,9 @@
 class Player {
-    constructor(pMainContext, pPositionVec, pSprite){
+    constructor(pMainContext, pPosition, pSprite){
+         this.setPosition(pPosition);
          this.mSprite = pSprite;
-         this.mPosition = pPositionVec;
          this.mMainContext = pMainContext;
-         this.transformMatrix;
+         this.mTransformMatrix;
          var mPlayerImage = new Image();
          mPlayerImage.src = this.mSprite;
          //Constructor
@@ -11,26 +11,12 @@ class Player {
          this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
              0, new Vector(1,1,1), mPlayerImage, 10, 270, 270, [3,3]);
 
-        //this.setMoveX(pMoveX);
-        //this.setMoveY(pMoveY); //<-- James said he didn't need these parameters anymore so I removed them from constructor
-        //this.mSpeedX = 0;
-        //this.mSpeedY = 0;
-
-        //document.getElementById('down').onclick = function() {
-        //    this.mSpeedY += 1;
-        //}
     }
-    getMoveX() {
-        return this.mMoveX;
+    getPosition(){
+        return this.mPosition;
     }
-    setMoveX(pMoveX) {
-        this.mMoveX = pMoveX;
-    }
-    getMoveY() {
-        return this.mMoveY;
-    }
-    setMoveY(pMoveY) {
-        this.mMoveY = pMoveY;
+    setPosition(pPosition) {
+        this.mPosition = pPosition;
     }
 
     //pCanvas needed for when checking player is inside boundaries, and if not, prevent movement
@@ -40,77 +26,56 @@ class Player {
         this.mAnimatedSpriteSheet.update();
     }
     draw(){
-        this.mAnimatedSpriteSheet.draw(this.transformMatrix);
-    }
+        this.mAnimatedSpriteSheet.draw(this.mTransformMatrix);
+    }   
 
     newPosition(pWorldMatrix) {
         var x, y, translate, newPosition;
 
-        x = this.mPosition.getX();
-        //x += this.getMoveX();
-        y = this.mPosition.getY();
-        //y += this.getMoveY();
+        x = this.getPosition().getX();
+        y = this.getPosition().getY();
 
         newPosition = new Vector(x, y, 1);
 
         translate = Matrix.createTranslation(newPosition);
-        this.transformMatrix = pWorldMatrix.multiply(translate);
+        this.mTransformMatrix = pWorldMatrix.multiply(translate);
     }
 
-    getPosition(){
-      return this.mPosition;
-    }
 
     getCenterPosition(){
-      return new Vector(this.mPosition.getX() + 270 / 2, this.mPosition.getY() + 270 / 2, 0);
-    }
-
-    getVertices(){
-        let posX = this.mPosition.getX();
-        let posY = this.mPosition.getY();
-        return [new Vector(posX, poY, 0),
-                new Vector(posX + 270, posY, 0),
-                new Vector(posX + 270, posY - 270, 0),
-                new Vector(posX, posY - 270, 0)];
+        return new Vector(this.getPosition().getX() + 270 / 2, this.getPosition().getY() + 270 / 2, 0);
     }
     
-    /* Dont need that
-    updateGameArea() {
-      //myGameArea.clear();
-      this.mAnimatedSpriteSheet.newPos();
-      this.mAnimatedSpriteSheet.update();
+     getVertices(){
+          let posX = this.getPosition().getX();
+          let posY = this.getPosition().getY();
+          return [new Vector(posX, poY, 0),
+                  new Vector(posX + 270, posY, 0),
+                  new Vector(posX + 270, posY - 270, 0),
+                  new Vector(posX, posY - 270, 0)];
     }
-    */
+  
     moveUp() {
-        if(document.getElementById("up").onclick) {
-            var moveY = this.getMoveY();
-            moveY -= 1;
-            this.setMoveY(moveY);
-        }
+        var y = this.getPosition();
+        y -= 1;
+        this.setPosition(y);
     }
-    /*
     moveDown() {
-        if(document.getElementById("up").onclick) {
-            var moveY = this.getMoveY();
-            moveY += 1;
-            this.setMoveY(moveY);
-        }
+        var y = this.getPosition();
+        y += 1;
+        this.setPosition(y);
     }
-    */
     moveLeft() {
-        if(document.getElementById("up").onclick) {
-            var moveX = this.getMoveX();
-            moveX -= 1;
-            this.setMoveX(moveX);
-        }
+        var x = this.getPosition();
+        x -= 1;
+        this.setPosition(x);
     }
     moveRight() {
-        if(document.getElementById("up").onclick) {
-            var moveX = this.getMoveX();
-            moveX += 1;
-            this.setMoveX(moveX);
-        }
+        var x = this.getPosition();
+        x += 1;
+        this.setPosition(x);
     }
+    
     stopMove() {
         this.setMoveX(0);
         this.setMoveY(0);
@@ -136,4 +101,13 @@ class Player {
     }
     */
 }
+
+ 
+
+
+
+
+
+
+
     
