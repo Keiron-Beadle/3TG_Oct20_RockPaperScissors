@@ -10,9 +10,9 @@ class Player {
          // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
          
              
-             if(pSprite == "SpriteSheets/Werewolf-idle.png"){
+             if(pSprite == "SpriteSheets/Werewolf-Idle.png"){
                 this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
-                    0, new Vector(1,1,1), mPlayerImage, 2, 270, 270, [1,1]);
+                    0, new Vector(1,1,1), mPlayerImage, 2, 270, 270, [1,1], 300);
              }
              else if(pSprite == "SpriteSheets/Werewolf_walk.png"){
                 this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,

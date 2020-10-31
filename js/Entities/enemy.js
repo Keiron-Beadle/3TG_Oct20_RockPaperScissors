@@ -8,7 +8,7 @@ class Enemy{
         this.visibilityBubble = 400; //How far he can see
         this.updateDelay = 400; //Delay between running pathfinding algorithm, if i did this every frame we'd stutter
         this.attackDelay = 800; //Delay between attacks once in "Attack" mode.
-        this.transformMatrix = Matrix.createIdentity(); //Transform of the enemy
+        this.transformMatrix; //Transform of the enemy
 
         var enemyImage = new Image();
         enemyImage.src = this.sprite;
@@ -47,8 +47,7 @@ class Enemy{
     }
 
     update(pCanvas, pObstacles, pWorldMat){
-        this.enemySpriteSheet.update(); //Updates the spritesheet animation for Enemy
-
+        this.moveToGoal(pWorldMat);
         let currentAIState = this.AI.getState(); //Gets current state of enemy
         if (currentAIState != "Random" && this.updateDelay <= 0){ 
             //If we're not randomly searching, meaning we've found the player, and we need to update in order
@@ -78,11 +77,12 @@ class Enemy{
             //Update any projectiles the enemy has fired
             this.projectiles[i].update();
         }
-
         //Move the enemy towards their goal
-        this.moveToGoal(pWorldMat);
+        //this.moveToGoal(pWorldMat);
         this.updateDelay--;
         this.attackDelay--;
+        this.enemySpriteSheet.update(); //Updates the spritesheet animation for Enemy
+        pWorldMat.setTransform(this.mainContext);
     }
 
     attack(){
@@ -91,18 +91,22 @@ class Enemy{
 
     moveToGoal(pWorldMat){
         var translate;
-        if (Math.floor(this.position.getX()) == Math.floor(this.goal.getX())){
-            this.goal = null;
-            return;
+        try{
+            if (Math.floor(this.position.getX()) == Math.floor(this.goal.getX())){
+                this.goal = null;
+                return;
+            }
+            else if (this.position.getX() < this.goal.getX()){    
+                this.position = this.position.add(new Vector(this.speed, 0, 0));
+            }
+            else if (this.position.getX() > this.goal.getX()){
+                this.position = this.position.add(new Vector(-this.speed, 0, 0));
+            }
         }
-        else if (this.position.getX() < this.goal.getX()){    
-            this.position = this.position.add(new Vector(this.speed, 0, 0));
-            translate = Matrix.createTranslation(this.position);
+        catch{
+
         }
-        else if (this.position.getX() > this.goal.getX()){
-            this.position = this.position.add(new Vector(-this.speed, 0, 0));
-            translate = Matrix.createTranslation(this.position);
-        }
+        translate = Matrix.createTranslation(this.position);
         //Make new transform matrix depending on if we need to go left or right.
         this.transformMatrix = pWorldMat.multiply(translate);
     }
