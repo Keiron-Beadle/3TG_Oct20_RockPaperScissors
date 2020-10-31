@@ -53,6 +53,12 @@ class EnemyAI{
                 let vecPerpendicularLine = new Vector(-vecLine.getY(), vecLine.getX());
                 let dDistPerpendicularLine = vecPerpendicularLine.multiply(new Vector(pPos.getX(), pPos.getY()));
 
+                /*
+                    This is all 'simple' math but it confused me, from what I gather, it's basically
+                    getting all 4 lines of a rectangle, and checking if the line between player + enemy
+                    intersects any of these lines, if it does, the enemy CANNOT see the player
+                */
+
                 let dPerpLineDist1 = vecPerpendicularLine.multiply(vertices[0]).subtract(dDistPerpendicularLine);
                 let dPerpLineDist2 = vecPerpendicularLine.multiply(vertices[1]).subtract(dDistPerpendicularLine);
                 let dPerpLineDist3 = vecPerpendicularLine.multiply(vertices[2]).subtract(dDistPerpendicularLine);
@@ -72,6 +78,7 @@ class EnemyAI{
         }
     }
 
+    //This will move randomly if the enemy cannot see the player
     runRandom(pPos, pCanvas){
         while (true){
             let movement = Math.floor(Math.random() * 10);
@@ -90,6 +97,7 @@ class EnemyAI{
         }
     }
 
+    //This will move toward the player
     runMoving(pPos, pTarget){
         let targetPos = pTarget.getPosition();
         if (targetPos.subtract(pPos).magnitude() <= 300){
@@ -101,6 +109,7 @@ class EnemyAI{
         }
     }
 
+    //If close enough, we'll also attack the player
     runAttacking(pTarget){
         return pTarget.getPosition();
     }
