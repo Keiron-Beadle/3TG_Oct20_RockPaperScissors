@@ -88,13 +88,14 @@ function onLoad() {
             entities[1].setMoveY(moveY);
         }
         */
-       getKeyAndMove(e);
+       //getKeyAndMove(e);
   
         for (var i = 0; i < entities.length; i++){
             entities[i].draw(); //Draw all entities i.e. enemy/player
         }
     }
 
+    /*
     function getKeyAndMove(e){				
 		var key_code=e.which||e.keyCode;
 		switch(key_code){
@@ -110,19 +111,12 @@ function onLoad() {
 			case 40: //down arrow key
 				player.moveDown();
 				break;						
-		}
-    /*
-    function startGame() {
-        myGameArea.start();
-        player = new Player(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
     }
     */
+        
     initialiseContext();
 
-    //startGame();
-
     animationLoop();
-    //draw();
 }
 
 window.addEventListener('load', onLoad, false);

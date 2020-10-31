@@ -1,16 +1,16 @@
 class Player {
     constructor(pMainContext, pPosition, pSprite){
-         this.mSprite = pSprite;
-         this.mMainContext = pMainContext;
-         this.transformMatrix;
-         var mPlayerImage = new Image();
-         mPlayerImage.src = this.mSprite;
-         //Constructor
-         // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
-         this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+        this.setPosition(pPosition);
+        this.mSprite = pSprite;
+        this.mMainContext = pMainContext;
+        this.mTransformMatrix;
+        var mPlayerImage = new Image();
+        mPlayerImage.src = this.mSprite;
+        //Constructor
+        // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
+        this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
              0, new Vector(1,1,1), mPlayerImage, 10, 270, 270, [3,3]);
 
-             this.setPosition(pPosition);
     }
     getPosition(){
         return this.mPosition;
@@ -26,21 +26,19 @@ class Player {
         this.mAnimatedSpriteSheet.update();
     }
     draw(){
-        this.mAnimatedSpriteSheet.draw(this.transformMatrix);
+        this.mAnimatedSpriteSheet.draw(this.mTransformMatrix);
     }
 
     newPosition(pWorldMatrix) {
         var x, y, translate, newPosition;
 
-        x = this.mPosition.getX();
-        //x += this.getMoveX();
-        y = this.mPosition.getY();
-        //y += this.getMoveY();
+        x = this.getPosition().getX();
+        y = this.getPosition().getY();
 
         newPosition = new Vector(x, y, 1);
 
         translate = Matrix.createTranslation(newPosition);
-        this.transformMatrix = pWorldMatrix.multiply(translate);
+        this.mTransformMatrix = pWorldMatrix.multiply(translate);
     }
 
     getCenterPosition(){
@@ -101,4 +99,6 @@ class Player {
     }
     */
 }
-    
+   
+
+
