@@ -1,5 +1,5 @@
 class Player {
-    constructor(pMainContext, pPositionVec, pSprite){
+    constructor(pMainContext, pPositionVec, pSprite, pSpeedX, pSpeedY){
         // this.loaded = false;
          this.mSprite = pSprite;
          this.mPosition = pPositionVec;
@@ -9,10 +9,28 @@ class Player {
          this.mAnimatedSpriteSheet = new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
              0, new Vector(1,1,1), mPlayerImage, 10, 270, 270, new Vector(3,3,0));
 
-        this.mSpeedX = 0;
-        this.mSpeedY = 0;
+        this.setSpeedX(pSpeedX);
+        this.setSpeedY(pSpeedY);
+        //this.mSpeedX = 0;
+        //this.mSpeedY = 0;
+
+        //document.getElementById('down').onclick = function() {
+        //    this.mSpeedY += 1;
+        //}
     }
- 
+    getSpeedX() {
+        return this.mSpeedX;
+    }
+    setSpeedX(pSpeedX) {
+        this.mSpeedX = pSpeedX;
+    }
+    getSpeedY() {
+        return this.mSpeedY;
+    }
+    setSpeedY(pSpeedY) {
+        this.mSpeedY = pSpeedY;
+    }
+
      update(){
          this.mAnimatedSpriteSheet.update();
      }
@@ -26,9 +44,9 @@ class Player {
         var x, y, translate, transform, newPosition;
 
         x = this.mPosition.getX();
-        x += this.mSpeedX;
+        x += this.getSpeedX();
         y = this.mPosition.getY();
-        y += this.mSpeedY;
+        y += this.getSpeedY();
 
         newPosition = new Vector(x, y, 1);
 
@@ -47,24 +65,41 @@ class Player {
     */
 
     moveup() {
-        this.mSpeedY -= 1;
+        if(document.getElementById("up").onclick) {
+            var speedY = this.getSpeedY();
+            speedY -= 1;
+            this.setSpeedY(speedY);
+        }
     }
     
+    /*
     movedown() {
-        this.mSpeedY += 1;
+        if(document.getElementById("up").onclick) {
+            var speedY = this.getSpeedY();
+            speedY += 1;
+            this.setSpeedY(speedY);
+        }
     }
-    
+    */
     moveleft() {
-        this.mSpeedX -= 1;
+        if(document.getElementById("up").onclick) {
+            var speedX = this.getSpeedX();
+            speedX -= 1;
+            this.setSpeedX(speedX);
+        }
     }
     
     moveright() {
-        this.mSpeedX += 1;
+        if(document.getElementById("up").onclick) {
+            var speedX = this.getSpeedX();
+            speedX += 1;
+            this.setSpeedX(speedX);
+        }
     }
 
     stopMove() {
-        this.mSpeedX = 0;
-        this.mSpeedY = 0;
+        this.setSpeedX(0);
+        this.setSpeedY(0);
     }
 
     setupKeyControls() {

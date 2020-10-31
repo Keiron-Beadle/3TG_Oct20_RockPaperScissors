@@ -82,6 +82,14 @@ function onLoad() {
         originMatrix = setCanvasOrigin();
         rootNode.setLocalTransform(originMatrix);
         renderVisitor.visit(rootNode);
+
+        // TRY CONTROL
+        document.getElementById('down').onclick = function() {
+            var speedY = entities[0].getSpeedY();
+            speedY += 1;
+            entities[1].setSpeedY(speedY);
+        }
+        //
         for (var i = 0; i < entities.length; i++){
             entities[i].draw(originMatrix);
         }
@@ -97,7 +105,7 @@ function onLoad() {
     //startGame();
 
     animationLoop();
-    draw(context);
+    //draw();
 }
 
 window.addEventListener('load', onLoad, false);
