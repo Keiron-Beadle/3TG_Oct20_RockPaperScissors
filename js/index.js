@@ -29,9 +29,9 @@ function onLoad() {
         //
 
         //Keiron's Enemy Test
-            enemyTest = new Enemy(context, new Vector(100,50,1), 'SpriteSheets/Demon-Walk.png');
+            enemyTest = new Enemy(context, new Vector(500,50,1), 'SpriteSheets/Demon-Walk.png');
             entities.push(enemyTest);
-            player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf_walk.png');
+            player = new Player(context, new Vector(-500,0,1), 'SpriteSheets/Werewolf_walk.png');
             enemyTest.setTarget(player);
             entities.push(player);
 
@@ -53,7 +53,7 @@ function onLoad() {
 
     function update(){
         for (var i = 0; i < entities.length; i++){
-            entities[i].update();
+            entities[i].update(canvas);
         }
     }
 

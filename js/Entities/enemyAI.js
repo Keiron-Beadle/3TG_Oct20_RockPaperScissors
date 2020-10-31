@@ -8,7 +8,7 @@ class EnemyAI{
         this.currentState = this.states[this.RANDOM];
     }
 
-    update(pPos, pTarget, pObstacleArray){
+    update(pPos, pTarget, pObstacleArray, pCanvas){
         let returnGoal;
         if (Math.floor(pPos.getX()) == Math.floor(pTarget.getPosition().getX())){
             return pTarget.getPosition();
@@ -22,7 +22,7 @@ class EnemyAI{
 
         switch(this.currentState){
             case this.states[this.RANDOM]:
-                returnGoal = this.runRandom(pPos);
+                returnGoal = this.runRandom(pPos, pCanvas);
                 break;
             case this.states[this.MOVING]:
                 returnGoal = this.runMoving(pPos, pTarget);
@@ -72,29 +72,37 @@ class EnemyAI{
         }
     }
 
-    runRandom(pPos){
-        let movement = Math.floor(Math.random() * 10);
-        if (movement <= 5){
-            movement = 10 -Math.random() *100;
+    runRandom(pPos, pCanvas){
+        while (true){
+            let movement = Math.floor(Math.random() * 10);
+            if (movement <= 5){
+                movement = 10 -Math.random() *100;
+            }
+            else{
+                movement = 10 + Math.random() *100;
+            }
+            let newVec = new Vector(pPos.getX() + movement, pPos.getY());
+            let canvasWidth = pCanvas.width / 2 - 270;
+            //let canvasHeight = pCanvas.height / 2 - 270;
+            if (newVec.getX() <= canvasWidth && newVec.getX() >= 0){
+                return newVec;
+            }
         }
-        else{
-            movement = 10 + Math.random() *100;
-        }
-        return new Vector(pPos.getX() + movement, pPos.getY());
     }
 
     runMoving(pPos, pTarget){
         let targetPos = pTarget.getPosition();
-        if (targetPos.subtract(pPos).magnitude() <= 100){
-           // this.currentState = this.states[this.ATTACKING];
+        if (targetPos.subtract(pPos).magnitude() <= 300){
+            this.currentState = this.states[this.ATTACKING];
+            return this.runAttacking(pTarget);
         }
         else{
             return targetPos;
         }
     }
 
-    runAttacking(pPos, pTarget){
-
+    runAttacking(pTarget){
+        return pTarget.getCenterPosition();
     }
 
     getState(){

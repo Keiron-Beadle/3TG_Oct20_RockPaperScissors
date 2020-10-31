@@ -3,13 +3,15 @@ class Enemy{
         this.sprite = pSprite;
         this.position = pPositionVec;
         this.mainContext = pMainContext;
+        this.speed = 0.8;
         this.projectiles = [];
-        this.speed = 0.5;
-        this.visibilityBubble = 200; 
-        this.updateDelay = 600;
+        this.visibilityBubble = 400; 
+        this.updateDelay = 400;
+        this.attackDelay = 800;
+
         var enemyImage = new Image();
         enemyImage.src = this.sprite;
-        this.animatedSpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
+        this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
             0, new Vector(1,1,1), enemyImage, 4, 270, 270, [2,2]);
 
         this.AI = new EnemyAI(this.visibilityBubble);
@@ -23,27 +25,42 @@ class Enemy{
         return this.target;
     }
 
-    update(){
-        this.animatedSpriteSheet.update();
+    update(pCanvas, pObstacles){
+        this.enemySpriteSheet.update();
         let currentAIState = this.AI.getState();
         if (currentAIState != "Random" && this.updateDelay <= 0){
-            this.goal = this.AI.update(this.position, this.getTarget());
-            this.updateDelay = 600;
+
+            this.goal = this.AI.update(this.position, this.getTarget(), pObstacles, pCanvas);
+
+            if (currentAIState == "Attacking" && this.attackDelay <= 0){
+                this.attack();
+                this.attackDelay = 800;
+            }
+
+            this.updateDelay = 400;
         }
         else if (this.goal == null){
-            this.goal = this.AI.update(this.position, this.getTarget());
+            this.goal = this.AI.update(this.position, this.getTarget(), pObstacles, pCanvas);
         }
         else if (currentAIState == "Random"){
             this.speed = 0.3 + Math.random() / 4;
         }
         else{
-            this.speed = 1;
+            this.speed = 0.7;
+        }
+
+        for (var i = 0; i < this.projectiles.length; i++)
+        {
+            this.projectiles[i].update();
         }
 
         this.moveToGoal();
         this.updateDelay--;
-        //Implement AI updates here
-        //Projectiles passed & Position
+        this.attackDelay--;
+    }
+
+    attack(){
+        this.projectiles.push(new Pumpkin(pTarget));
     }
 
     moveToGoal(){
@@ -59,6 +76,11 @@ class Enemy{
     }
 
     draw(pWorldMatrix){
-        this.animatedSpriteSheet.draw(pWorldMatrix);
+        this.enemySpriteSheet.draw(pWorldMatrix);
+
+        for (var i = 0; i < this.projectiles.length; i++)
+        {
+            this.projectiles[i].update();
+        }
     }   
 }
