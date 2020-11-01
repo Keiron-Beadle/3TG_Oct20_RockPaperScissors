@@ -6,6 +6,11 @@ class Player {
          this.mTransformMatrix;
          var mPlayerImage = new Image();
          mPlayerImage.src = this.mSprite;
+         this.canJump = true;
+         this.jumping = false;
+         this.timeOfJump = 50;
+         this.heightOfJump = 300;
+         this.jumpVelocity = this.heightOfJump / this.timeOfJump;
          //Constructor
          // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
          
@@ -93,6 +98,10 @@ class Player {
         x = this.getPosition().getX();
         y = this.getPosition().getY();
 
+        if (this.isJumping){
+            this.jump();
+        }
+
         newPosition = new Vector(x, y, 1);
 
         translate = Matrix.createTranslation(newPosition);
@@ -111,6 +120,18 @@ class Player {
                   new Vector(posX + 270, posY, 0),
                   new Vector(posX + 270, posY - 270, 0),
                   new Vector(posX, posY - 270, 0)];
+    }
+
+    canJump(){
+        return this.canJump;
+    }
+
+    isJumping(){
+        return this.jumping;
+    }
+
+    jump(){
+        this.mPosition.setY(this.mPosition.getY() + this.jumpVelocity);
     }
   
     moveUp() {
