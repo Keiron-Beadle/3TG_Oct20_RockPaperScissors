@@ -6,7 +6,7 @@ function onLoad() {
     var entities = [];
     var powerups = [];
     var obstacles = [];
-    
+    window.addEventListener('click', onClick, false);
     function initialiseContext() {
         
         canvas = document.getElementById('gameCanvas');
@@ -53,16 +53,16 @@ function onLoad() {
         //Keiron's Enemy Test
         //enemyTest = new Enemy(context, new Vector(100,25,1), 'SpriteSheets/Demon-Walk.png');
         //player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf-Idle.png');
-        enemyTest = new Enemy(context, new Vector(-300,15,1), 'SpriteSheets/Demon-Walk.png');
-        player = new Player(context, new Vector(100,0,1));
+        //enemyTest = new Enemy(context, new Vector(-300,15,1), 'SpriteSheets/Demon-Walk.png');
+        player = new Player(context, new Vector(-135,100,1));
         entities.push(player);
-        entities.push(enemyTest);
-        enemyTest.setTarget(player);
-        let powerupTest = new Powerup(context, new Vector(0,0,1), originMatrix);
-        powerups.push(powerupTest);
+        //entities.push(enemyTest);
+        //enemyTest.setTarget(player);
+        //let powerupTest = new Powerup(context, new Vector(0,0,1), originMatrix);
+        //powerups.push(powerupTest);
 
-        let platformTest = new Platform(context, new Vector(-50,350,1), 500, originMatrix);
-        obstacles.push(platformTest);
+        //let platformTest = new Platform(context, new Vector(-50,350,1), 500, originMatrix);
+        //obstacles.push(platformTest);
         //
     }
 

@@ -1,4 +1,10 @@
+function onClick(event){
+    Player.mousePos = new Vector(event.X, event.Y);
+}
+
 class Player {
+
+    static mousePos;
     constructor(pMainContext, pPosition){
          this.setPosition(pPosition);
          this.mMainContext = pMainContext;
@@ -18,16 +24,16 @@ class Player {
          //Constructor
          // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
          
-         this.IDLE = 0;
-         this.WALK = 1;
-         this.BITE = 2;
-         this.CLAW = 3;
+         this.SPAWN = 0;
+         this.IDLE = 1;
+         this.PUMPKIN = 2;
+         this.DEATH = 3;
          this.JUMP = 4;
          this.DOUBLEJUMP = 5;
 
          this.initialiseSprites();      
        
-         this.mAnimatedSpriteSheet = this.werewolfSprites[this.IDLE];
+         this.mAnimatedSpriteSheet = this.playerSprites[0];
 
     }
 
@@ -50,9 +56,7 @@ class Player {
             if (oldPos == this.mPosition){
                 UpdateSpriteSheet("Idle");
             }
-            else{
-                UpdateSpriteSheet("Walk");
-            }
+            this.UpdateSpriteSheet("Idle");
         }
         this.mAnimatedSpriteSheet.update();
     }
@@ -66,7 +70,7 @@ class Player {
         x = this.getPosition().getX();
         y = this.getPosition().getY();
 
-        if (this.isJumping()){
+        /*if (this.isJumping()){
             this.jump();
             if (this.jumpCounter <= 0){
                 this.jumping = false;
@@ -78,7 +82,7 @@ class Player {
             if(!this.collisionCheck(pObstacles)){
                 y += this.gravity;
             }
-        }
+        }*/
 
         newPosition = new Vector(x, y, 1);
         this.setPosition(newPosition);
@@ -164,8 +168,8 @@ class Player {
             }
         }
         else {
-            if (this.mAnimatedSpriteSheet != this.werewolfSprites[anim]) {
-                this.mAnimatedSpriteSheet = this.werewolfSprites[anim];
+            if (this.mAnimatedSpriteSheet != this.playerSprites[anim]) {
+                this.mAnimatedSpriteSheet = this.playerSprites[anim];
             }
         }
     }
@@ -198,8 +202,8 @@ class Player {
 
     findCurrentAction(){
         let actionIndex;
-        for (var i = 0; i < this.werewolfSprites.length; i++){
-            if (this.werewolfSprites[i] == this.mAnimatedSpriteSheet || this.beewolfSprites[i] == this.mAnimatedSpriteSheet){
+        for (var i = 0; i < this.playerSprites.length; i++){
+            if (this.playerSprites[i] == this.mAnimatedSpriteSheet || this.playerSprites[i] == this.mAnimatedSpriteSheet){
                 actionIndex = i;
                 break;
             }
@@ -221,7 +225,26 @@ class Player {
     }
 
     initialiseSprites() {
-        let werewolfImages = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image()];
+        let SpawnImage = new Image();
+        SpawnImage.src = "SpriteSheets/Demon-Spawn.png";
+        let IdleImage = new Image();
+        IdleImage.src = "SpriteSheets/Demon-Idle.png";
+        let PumpkinImage = new Image();
+        PumpkinImage.src = "SpriteSheets/Demon-Pumpkin.png";
+        let DeathImage = new Image();
+        DeathImage.src = "SpriteSheets/Demon-Death.png";
+
+        this.playerSprites = [
+            new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+                0, new Vector(1, 1, 1), SpawnImage, 4, 270, 270, [2, 2]),
+            new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+                0, new Vector(1, 1, 1), IdleImage, 4, 270, 270, [2, 2]),
+            new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+                0, new Vector(1, 1, 1), PumpkinImage, 9, 270, 270, [3, 3]),
+            new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+                0, new Vector(1, 1, 1), DeathImage, 9, 270, 270, [3, 3])
+        ];
+        /*let werewolfImages = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image()];
         werewolfImages[this.IDLE].src = "SpriteSheets/Werewolf-Idle.png";
         werewolfImages[this.WALK].src = "SpriteSheets/Werewolf-Walk.png";
         werewolfImages[this.BITE].src = "SpriteSheets/Werewolf-Bite.png";
@@ -235,12 +258,12 @@ class Player {
         beewolfImages[this.BITE].src = "SpriteSheets/Beewolf-Bite.png";
         beewolfImages[this.CLAW].src = "SpriteSheets/Beewolf-Claw.png";
         beewolfImages[this.JUMP].src = "SpriteSheets/Beewolf-Jump.png";
-        beewolfImages[this.DOUBLEJUMP].src = "SpriteSheets/Beewolf-DoubleJump.png";
+        beewolfImages[this.DOUBLEJUMP].src = "SpriteSheets/Beewolf-DoubleJump.png";*/
     
         //Idle, Walk, Bite, Claw, Jump, Howl, DoubleJump
         //Constructor
         // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
-        this.werewolfSprites = [
+        /*this.werewolfSprites = [
             new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
                 0, new Vector(1, 1, 1), werewolfImages[0], 2, 270, 270, [1, 1], 300),
             new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
@@ -268,7 +291,7 @@ class Player {
                 0, new Vector(1, 1, 1), beewolfImages[4], 5, 270, 270, [2, 3]),
             new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
                 0, new Vector(1, 1, 1), beewolfImages[5], 9, 270, 270, [3, 3])
-        ];
+        ];*/
     }
     /*
     setupKeyControls() {
