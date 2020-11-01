@@ -82,7 +82,17 @@ function onLoad() {
     function update(){
         for (var i = 0; i < entities.length; i++){
             entities[i].update(canvas, obstacles, originMatrix); //Update all entities i.e. enemy/player
-        }
+            if(entities[i].health == 0){
+                entities.splice(i, 1);
+                if (i == powerups.length){
+                    break;
+                }
+                else{
+                    i--;
+                }
+            }
+        }  
+        
 
         for (var i = 0; i < obstacles.length; i++){
             obstacles[i].update();
@@ -109,13 +119,27 @@ function onLoad() {
         context.drawImage(backgroundImage, -canvas.width / 2, - canvas.height / 2);
         renderVisitor.visit(rootNode);
 
-        // TRY CONTROL
+        // try Controls
+        // All those don't work but don't crash, They just stop the animation!
+        //setupKeyControls();
+        /*
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
+        if(rightPressed) {
+            //player.moveRight(canvas);
+            entities[0].moveRight(canvas);
+        }
+        else if(leftPressed) {
+            //player.moveLeft(canvas);
+            entities[0].moveLeft(canvas);
+        }
+        */
         document.getElementById('down').onclick = function() {
             //alert(moveY);
-            var moveY = entities[1].getMoveY();
-            moveY += 1;
-            entities[1].setMoveY(moveY);
+            entities[0].moveDown();
         }
+        
+        //document.addEventListener("keydown", change_direction);
         //
         for (var i = 0; i < entities.length; i++){
             entities[i].draw(); //Draw all entities i.e. enemy/player
@@ -130,17 +154,85 @@ function onLoad() {
         }
     }
 
-    function startGame() {
-        myGameArea.start();
-        player = new Player(context, new Vector(0,0,1), 'SpriteSheets/Werewolf-Walk.png');
+    
+    var rightPressed = false;
+    var leftPressed = false;
+
+    function keyDownHandler(e) {
+        if(e.key == "Right" || e.key == "ArrowRight") {
+            rightPressed = true;
+        }
+        else if(e.key == "Left" || e.key == "ArrowLeft") {
+            leftPressed = true;
+        }
+    }
+    function keyUpHandler(e) {
+        if(e.key == "Right" || e.key == "ArrowRight") {
+            rightPressed = false;
+        }
+        else if(e.key == "Left" || e.key == "ArrowLeft") {
+            leftPressed = false;
+        }
     }
 
+    function change_direction(event) 
+{  
+   const LEFT_KEY = 37;
+   const RIGHT_KEY = 39;
+   const UP_KEY = 38;
+   const DOWN_KEY = 40;
+ 
+   const keyPressed = event.keyCode;
+   const goingUp = dy === -10;
+   const goingDown = dy === 10;
+   const goingRight = dx === 10;  
+   const goingLeft = dx === -10;
+ 
+     if (keyPressed === LEFT_KEY && !goingRight){    
+        entities[0].moveLeft(canvas);
+        dx = -10;
+        dy = 0; 
+     }
+     if (keyPressed === UP_KEY && !goingDown){    
+        entities[0].moveUp(canvas);
+        dx = 0;
+        dy = -10;
+    }
+     if (keyPressed === RIGHT_KEY && !goingLeft){    
+        entities[0].moveRight(canvas);
+        dx = 10;
+        dy = 0;
+    }
+     if (keyPressed === DOWN_KEY && !goingUp){    
+        entities[0].moveDown(canvas);
+        dx = 0;
+        dy = 10;
+    }
+}
+    
+    function setupKeyControls() {
+        document.onkeydown = function(e) {
+          switch (e.keyCode) {
+            case 37:
+                entities[0].moveLeft(canvas);
+                break;
+            case 38:
+                entities[0].moveRight(canvas);
+                break;
+            case 39:
+                entities[0].moveUp(canvas);
+                break;
+            case 40:
+                entities[0].moveDown(canvas);
+                break;
+          }
+        };
+    }
+    
+          
     initialiseContext();
 
-    //startGame();
-
     animationLoop();
-    //draw();
 }
 
 window.addEventListener('load', onLoad, false);

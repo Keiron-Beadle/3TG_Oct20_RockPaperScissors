@@ -162,9 +162,10 @@ class Player {
                 anim =  this.DOUBLEJUMP;
                 break;
         }
-        if (this.poweredUp) {
+        if (this.poweredUp == true) {
             if (this.mAnimatedSpriteSheet != this.beewolfSprites[anim]) {
                 this.mAnimatedSpriteSheet = this.beewolfSprites[anim];
+                var b = 1;
             }
         }
         else {
@@ -174,31 +175,56 @@ class Player {
         }
     }
 
-    moveUp() {
-        var y = this.getPosition();
-        y -= 1;
-        this.setPosition(y);
+    moveUp(pCanvas) {
+        var y = this.getPosition().getY();
+        if (y < 0){
+            y = 0;
+        }
+        else {
+            y -= 1;
+        }
+        this.getPosition().setY(y);
     }
-    moveDown() {
-        var y = this.getPosition();
+    moveDown(pCanvas) {
+        var y = this.getPosition().getY();
+        //if (y + this.mPlayerImage.height > pCanvas.height){
+            /*
+        if (y + 100 > pCanvas.height){
+                y = pCanvas.height - this.mPlayerImage.height;
+        }
+        else {
+            y += 1;
+        }
+        */
         y += 1;
-        this.setPosition(y);
+        this.getPosition().setY(y);
     }
-    moveLeft() {
-        var x = this.getPosition();
-        x -= 1;
-        this.setPosition(x);
+    moveLeft(pCanvas) {
+        var x = this.getPosition().getX();
+        if (x < 0){
+            x = 0;
+        }
+        else {
+            x -= 1;
+        }
+        this.getPosition().setX(x);
     }
-    moveRight() {
-        var x = this.getPosition();
-        x += 1;
-        this.setPosition(x);
+    moveRight(pCanvas) {
+        var x = this.getPosition().getX();
+        if (x + this.mPlayerImage.width > pCanvas.width){
+            x = pCanvas.width - this.mPlayerImage.width;
+        }
+        else {
+            x += 1;
+        }
+        this.getPosition().setX(x);
     }
-    
+    /*
     stopMove() {
         this.setMoveX(0);
         this.setMoveY(0);
     }
+    */
 
     findCurrentAction(){
         let actionIndex;
