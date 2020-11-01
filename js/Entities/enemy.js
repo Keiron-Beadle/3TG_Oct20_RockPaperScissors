@@ -3,11 +3,11 @@ class Enemy{
         this.sprite = pSprite;
         this.position = pPositionVec;
         this.mainContext = pMainContext;
-        this.speed = 0.8; //Speed of enemy
+        this.speed = 0.4; //Speed of enemy
         this.projectiles = []; //Array of the pumpkins/bats he's fired
-        this.visibilityBubble = 400; //How far he can see
+        this.visibilityBubble = 600; //How far he can see
         this.updateDelay = 400; //Delay between running pathfinding algorithm, if i did this every frame we'd stutter
-        this.attackDelay = 800; //Delay between attacks once in "Attack" mode.
+        this.attackDelay = 0; //Delay between attacks once in "Attack" mode.
         this.transformMatrix; //Transform of the enemy
 
         var enemyImage = new Image();
@@ -47,17 +47,16 @@ class Enemy{
     }
 
     update(pCanvas, pObstacles, pWorldMat){
-        this.enemySpriteSheet.update(); //Updates the spritesheet animation for Enemy
-
+        this.moveToGoal(pWorldMat);
         let currentAIState = this.AI.getState(); //Gets current state of enemy
         if (currentAIState != "Random" && this.updateDelay <= 0){ 
             //If we're not randomly searching, meaning we've found the player, and we need to update in order
             //to get the current player position so that we can move to the player's new position, we run the algorithm.
             this.goal = this.AI.update(this.position, this.getTarget(), pObstacles, pCanvas);
-
+            currentAIState = this.AI.getState();
             if (currentAIState == "Attacking" && this.attackDelay <= 0){
-                this.attack(); //If we're attacking, and the attack is ready, run attack function.
-                this.attackDelay = 800; 
+                this.attack(pWorldMat); //If we're attacking, and the attack is ready, run attack function.
+                this.attackDelay = 600; 
             }
 
             this.updateDelay = 400;
@@ -70,7 +69,7 @@ class Enemy{
             this.speed = 0.3 + Math.random() / 4;
         }
         else{
-            this.speed = 0.7;
+            this.speed = 0.4;
         }
 
         for (var i = 0; i < this.projectiles.length; i++)
@@ -78,30 +77,35 @@ class Enemy{
             //Update any projectiles the enemy has fired
             this.projectiles[i].update();
         }
-
-        //Move the enemy towards their goal
-        this.moveToGoal(pWorldMat);
         this.updateDelay--;
         this.attackDelay--;
+        this.enemySpriteSheet.update(); //Updates the spritesheet animation for Enemy
+        pWorldMat.setTransform(this.mainContext);
     }
 
-    attack(){
-        //this.projectiles.push(new Pumpkin(pTarget));
+    attack(pWorldMat){
+        this.projectiles.push(new Pumpkin(this.mainContext, this.getTarget(), this.position, pWorldMat));
+        
     }
 
     moveToGoal(pWorldMat){
         var translate;
-        if (Math.floor(this.position.getX()) == Math.floor(this.goal.getX())){
-            this.goal = null;
-            return;
+        try{
+            if (Math.floor(this.position.getX()) == Math.floor(this.goal.getX())){
+                this.goal = null;
+                return;
+            }
+            else if (this.position.getX() < this.goal.getX()){    
+                this.position = this.position.add(new Vector(this.speed, 0, 0));
+            }
+            else if (this.position.getX() > this.goal.getX()){
+                this.position = this.position.add(new Vector(-this.speed, 0, 0));
+            }
         }
-        else if (this.position.getX() < this.goal.getX()){         
-            translate = Matrix.createTranslation(new Vector(this.position.getX() + this.speed,0,1));
+        catch{
+
         }
-        else if (this.position.getX() > this.goal.getX()){
-            translate = Matrix.createTranslation(new Vector(this.position.getX() - this.speed,0,1));
-        }
-        //Make new transform matrix depending on if we need to go left or right. 
+        translate = Matrix.createTranslation(this.position);
         this.transformMatrix = pWorldMat.multiply(translate);
     }
 
@@ -110,7 +114,7 @@ class Enemy{
 
         for (var i = 0; i < this.projectiles.length; i++)
         {
-            this.projectiles[i].draw();
+            this.projectiles[i].draw(this.transformMatrix);
         }
     }   
 }

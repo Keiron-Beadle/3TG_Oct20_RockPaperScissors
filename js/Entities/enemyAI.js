@@ -25,7 +25,7 @@ class EnemyAI{
                 returnGoal = this.runRandom(pPos, pCanvas);
                 break;
             case this.states[this.MOVING]:
-                returnGoal = this.runMoving(pPos, pTarget);
+                returnGoal = this.runMoving(pPos, pTarget, pCanvas);
                 break;
             case this.states[this.ATTACKING]:
                 returnGoal = this.runAttacking(pPos, pTarget);
@@ -98,9 +98,10 @@ class EnemyAI{
     }
 
     //This will move toward the player
-    runMoving(pPos, pTarget){
+    runMoving(pPos, pTarget, pCanvas){
+        pTarget.getTransformedPosition().setTransform(pCanvas.getContext('2d'));
         let targetPos = pTarget.getPosition();
-        if (targetPos.subtract(pPos).magnitude() <= 300){
+        if (targetPos.subtract(pPos).magnitude() <= 450){
             this.currentState = this.states[this.ATTACKING];
             return this.runAttacking(pTarget);
         }

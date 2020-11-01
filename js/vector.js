@@ -72,7 +72,7 @@ class Vector{
         this.mX = pX;
     }
     getY(){
-        return this.mY;
+        return this.mY
     }
     setY(pY){
         this.mY = pY;
