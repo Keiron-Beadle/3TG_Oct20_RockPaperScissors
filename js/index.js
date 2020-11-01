@@ -148,10 +148,20 @@ function onLoad() {
             entities[0].moveLeft(canvas);
         }
         */
+       
+       document.getElementById('up').onclick = function() {
+        entities[0].moveUp();
+        }
         document.getElementById('down').onclick = function() {
-            //alert(moveY);
             entities[0].moveDown();
         }
+        document.getElementById('left').onclick = function() {
+            entities[0].moveLeft();
+        }
+        document.getElementById('right').onclick = function() {
+            entities[0].moveRight();
+        }
+        
         
         //document.addEventListener("keydown", change_direction);
         //
