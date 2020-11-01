@@ -124,28 +124,27 @@ function onLoad() {
         context.drawImage(backgroundImage, -canvas.width / 2, - canvas.height / 2);
         renderVisitor.visit(rootNode);
 
-        // try Control
-        //document.addEventListener("keydown", keyDownHandler, false);
-        //document.addEventListener("keyup", keyUpHandler, false);
-
+        // try Controls
+        // All those don't work but don't crash, They just stop the animation!
         //setupKeyControls();
-
         /*
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
         if(rightPressed) {
             //player.moveRight(canvas);
-            entities[1].moveRight(canvas);
+            entities[0].moveRight(canvas);
         }
         else if(leftPressed) {
             //player.moveLeft(canvas);
-            entities[1].moveLeft(canvas);
+            entities[0].moveLeft(canvas);
         }
-        */
         
         document.getElementById('down').onclick = function() {
             //alert(moveY);
-            entities[1].moveDown();
+            entities[0].moveDown();
         }
-        
+        */
+        //
         for (var i = 0; i < entities.length; i++){
             entities[i].draw(); //Draw all entities i.e. enemy/player
         }
@@ -155,26 +154,26 @@ function onLoad() {
         }
     }
 
-    /*
+    
     function setupKeyControls() {
         document.onkeydown = function(e) {
           switch (e.keyCode) {
             case 37:
-                entities[1].moveLeft(canvas);
+                entities[0].moveLeft(canvas);
                 break;
             case 38:
-                entities[1].moveRight(canvas);
+                entities[0].moveRight(canvas);
                 break;
             case 39:
-                entities[1].moveUp(canvas);
+                entities[0].moveUp(canvas);
                 break;
             case 40:
-                entities[1].moveDown(canvas);
+                entities[0].moveDown(canvas);
                 break;
           }
         };
     }
-    */
+    
           
     initialiseContext();
 
