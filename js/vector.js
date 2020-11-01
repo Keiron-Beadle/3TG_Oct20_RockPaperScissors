@@ -16,6 +16,13 @@ class Vector{
     multiply(scalarValue){
         return new Vector(this.getX() * scalarValue, this.getY() * scalarValue, this.getZ() * scalarValue);
     }
+    
+    multiplyVector(vectorValue){
+        let firstRow = this.getY() * vectorValue.getZ() - this.getZ() * vectorValue.getY();
+        let secondRow = this.getZ() * vectorValue.getX() - this.getX() * vectorValue.getZ();
+        let thirdRow = this.getX() * vectorValue.getY() - this.getY() * vectorValue.getX();
+        return new Vector(firstRow, secondRow, thirdRow);
+    }
 
     divide(scalarValue){
         return new Vector(this.getX() / scalarValue, this.getY() / scalarValue, this.getZ() * scalarValue);

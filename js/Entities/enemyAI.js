@@ -47,11 +47,11 @@ class EnemyAI{
             }
             for (var i = 0; i < pObstacles.length; i++){
 
-                let vertices = pObstacles.getVertices();
-                vecLine /= distance;
+                let vertices = pObstacles[i].getVertices();
+                vecLine = vecLine.divide(distance);
                 //let dDistLine = vecLine.multiply(new Vector(pPos.getX(), pPos.getY()));
-                let vecPerpendicularLine = new Vector(-vecLine.getY(), vecLine.getX());
-                let dDistPerpendicularLine = vecPerpendicularLine.multiply(new Vector(pPos.getX(), pPos.getY()));
+                let vecPerpendicularLine = new Vector(-vecLine.getY(), vecLine.getX(), 0);
+                let dDistPerpendicularLine = vecPerpendicularLine.multiplyVector(new Vector(pPos.getX(), pPos.getY(), 0));
 
                 /*
                     This is all 'simple' math but it confused me, from what I gather, it's basically
@@ -59,13 +59,15 @@ class EnemyAI{
                     intersects any of these lines, if it does, the enemy CANNOT see the player
                 */
 
-                let dPerpLineDist1 = vecPerpendicularLine.multiply(vertices[0]).subtract(dDistPerpendicularLine);
-                let dPerpLineDist2 = vecPerpendicularLine.multiply(vertices[1]).subtract(dDistPerpendicularLine);
-                let dPerpLineDist3 = vecPerpendicularLine.multiply(vertices[2]).subtract(dDistPerpendicularLine);
-                let dPerpLineDist4 = vecPerpendicularLine.multiply(vertices[3]).subtract(dDistPerpendicularLine);
+                let dPerpLineDist1 = vecPerpendicularLine.multiplyVector(vertices[0]).subtract(dDistPerpendicularLine);
+                let dPerpLineDist2 = vecPerpendicularLine.multiplyVector(vertices[1]).subtract(dDistPerpendicularLine);
+                let dPerpLineDist3 = vecPerpendicularLine.multiplyVector(vertices[2]).subtract(dDistPerpendicularLine);
+                let dPerpLineDist4 = vecPerpendicularLine.multiplyVector(vertices[3]).subtract(dDistPerpendicularLine);
 
-                let dMinPerpLineDist = Math.min(dPerpLineDist1, dPerpLineDist2, dPerpLineDist3, dPerpLineDist4 );
-                let dMaxPerpLineDist = Math.max(dPerpLineDist1,dPerpLineDist2,dPerpLineDist3,dPerpLineDist4);
+                let dMinPerpLineDist = Math.min(dPerpLineDist1.getZ(), dPerpLineDist2.getZ(), 
+                                        dPerpLineDist3.getZ(), dPerpLineDist4.getZ());
+                let dMaxPerpLineDist = Math.max(dPerpLineDist1.getZ(),dPerpLineDist2.getZ(),
+                                        dPerpLineDist3.getZ(),dPerpLineDist4.getZ());
                 
                 if (dMinPerpLineDist <= 0 && dMaxPerpLineDist <= 0 ||
                     dMinPerpLineDist >= 0 && dMaxPerpLineDist >= 0){

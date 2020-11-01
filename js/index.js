@@ -60,6 +60,9 @@ function onLoad() {
         enemyTest.setTarget(player);
         let powerupTest = new Powerup(context, new Vector(0,0,1), originMatrix);
         powerups.push(powerupTest);
+
+        let platformTest = new Platform(context, new Vector(0,-110,1), 100, originMatrix);
+        obstacles.push(platformTest);
         //
     }
 
@@ -79,6 +82,10 @@ function onLoad() {
     function update(){
         for (var i = 0; i < entities.length; i++){
             entities[i].update(canvas, obstacles, originMatrix); //Update all entities i.e. enemy/player
+        }
+
+        for (var i = 0; i < obstacles.length; i++){
+            obstacles[i].update();
         }
 
         for (var i = 0; i < powerups.length; i++){
@@ -112,6 +119,10 @@ function onLoad() {
         //
         for (var i = 0; i < entities.length; i++){
             entities[i].draw(); //Draw all entities i.e. enemy/player
+        }
+
+        for (var i = 0; i < obstacles.length; i++){
+            obstacles[i].draw();
         }
 
         for (var i = 0; i < powerups.length; i++){
