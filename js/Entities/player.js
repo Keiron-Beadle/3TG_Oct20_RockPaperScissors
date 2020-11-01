@@ -55,49 +55,54 @@ class Player {
                   new Vector(posX, posY - 270, 0)];
     }
   
-    moveUp() {
-        var y = this.getPosition();
-        y -= 1;
+    moveUp(pCanvas) {
+        var y = this.getPosition().getY();
+        if (y < 0){
+            y = 0;
+        }
+        else {
+            y -= 1;
+        }
         this.setPosition(y);
     }
-    moveDown() {
-        var y = this.getPosition();
+    moveDown(pCanvas) {
+        var y = this.getPosition().getY();
+        //if (y + this.mPlayerImage.height > pCanvas.height){
+            /*
+        if (y + 100 > pCanvas.height){
+                y = pCanvas.height - this.mPlayerImage.height;
+        }
+        else {
+            y += 1;
+        }
+        */
         y += 1;
         this.setPosition(y);
     }
-    moveLeft() {
-        var x = this.getPosition();
-        x -= 1;
+    moveLeft(pCanvas) {
+        var x = this.getPosition().getX();
+        if (x < 0){
+            x = 0;
+        }
+        else {
+            x -= 1;
+        }
         this.setPosition(x);
     }
-    moveRight() {
-        var x = this.getPosition();
-        x += 1;
+    moveRight(pCanvas) {
+        var x = this.getPosition().getX();
+        if (x + this.mPlayerImage.width > pCanvas.width){
+            x = pCanvas.width - this.mPlayerImage.width;
+        }
+        else {
+            x += 1;
+        }
         this.setPosition(x);
     }
-    
+    /*
     stopMove() {
         this.setMoveX(0);
         this.setMoveY(0);
-    }
-    /*
-    setupKeyControls() {
-        document.onkeydown = function(e) {
-          switch (e.keyCode) {
-            case 37:
-            cube.rotation.x += 1;
-            break;
-            case 38:
-            cube.rotation.z -= 1;
-            break;
-            case 39:
-            cube.rotation.x -= 1;
-            break;
-            case 40:
-            cube.rotation.z += 1;
-            break;
-          }
-        };
     }
     */
 }

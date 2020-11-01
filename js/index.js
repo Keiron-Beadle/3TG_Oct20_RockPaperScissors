@@ -5,7 +5,9 @@ function onLoad() {
     var enemyTest, player;
     var entities = [];
     var obstacles = [];
-    
+
+   
+
     function initialiseContext() {
         
         canvas = document.getElementById('gameCanvas');
@@ -76,44 +78,78 @@ function onLoad() {
         }
     }
 
+    var rightPressed = false;
+    var leftPressed = false;
+
+    function keyDownHandler(e) {
+        if(e.key == "Right" || e.key == "ArrowRight") {
+            rightPressed = true;
+        }
+        else if(e.key == "Left" || e.key == "ArrowLeft") {
+            leftPressed = true;
+        }
+    }
+    function keyUpHandler(e) {
+        if(e.key == "Right" || e.key == "ArrowRight") {
+            rightPressed = false;
+        }
+        else if(e.key == "Left" || e.key == "ArrowLeft") {
+            leftPressed = false;
+        }
+    }
+
     function draw() {
         context.clearRect(-canvas.width / 2, - canvas.height / 2, canvas.width, canvas.height);
         renderVisitor.visit(rootNode);
 
-        /* // try Control
-        document.getElementById('down').onclick = function() {
-            //alert(moveY);
-            var moveY = entities[1].getMoveY();
-            moveY += 1;
-            entities[1].setMoveY(moveY);
+        // try Control
+        //document.addEventListener("keydown", keyDownHandler, false);
+        //document.addEventListener("keyup", keyUpHandler, false);
+
+        //setupKeyControls();
+
+        /*
+        if(rightPressed) {
+            //player.moveRight(canvas);
+            entities[1].moveRight(canvas);
+        }
+        else if(leftPressed) {
+            //player.moveLeft(canvas);
+            entities[1].moveLeft(canvas);
         }
         */
-       //getKeyAndMove(e);
-  
+        
+        document.getElementById('down').onclick = function() {
+            //alert(moveY);
+            entities[1].moveDown();
+        }
+        
         for (var i = 0; i < entities.length; i++){
             entities[i].draw(); //Draw all entities i.e. enemy/player
         }
     }
 
     /*
-    function getKeyAndMove(e){				
-		var key_code=e.which||e.keyCode;
-		switch(key_code){
-			case 37: //left arrow key
-				player.moveLeft();
-				break;
-			case 38: //Up arrow key
-				player.moveUp();
-				break;
-			case 39: //right arrow key
-				player.moveRight();
-				break;
-			case 40: //down arrow key
-				player.moveDown();
-				break;						
+    function setupKeyControls() {
+        document.onkeydown = function(e) {
+          switch (e.keyCode) {
+            case 37:
+                entities[1].moveLeft(canvas);
+                break;
+            case 38:
+                entities[1].moveRight(canvas);
+                break;
+            case 39:
+                entities[1].moveUp(canvas);
+                break;
+            case 40:
+                entities[1].moveDown(canvas);
+                break;
+          }
+        };
     }
     */
-        
+          
     initialiseContext();
 
     animationLoop();
