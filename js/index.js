@@ -54,14 +54,14 @@ function onLoad() {
         //enemyTest = new Enemy(context, new Vector(100,25,1), 'SpriteSheets/Demon-Walk.png');
         //player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf-Idle.png');
         enemyTest = new Enemy(context, new Vector(0,15,1), 'SpriteSheets/Demon-Walk.png');
-        player = new Player(context, new Vector(-400,0,1));
+        player = new Player(context, new Vector(100,0,1));
         entities.push(player);
-        entities.push(enemyTest);
-        enemyTest.setTarget(player);
+        //entities.push(enemyTest);
+        //enemyTest.setTarget(player);
         let powerupTest = new Powerup(context, new Vector(0,0,1), originMatrix);
-        powerups.push(powerupTest);
+        //powerups.push(powerupTest);
 
-        let platformTest = new Platform(context, new Vector(0,-110,1), 100, originMatrix);
+        let platformTest = new Platform(context, new Vector(-50,350,1), 500, originMatrix);
         obstacles.push(platformTest);
         //
     }

@@ -7,8 +7,10 @@ class Player {
          this.canJump = true;
          this.jumping = false;
          this.timeOfJump = 50;
+         this.jumpCounter = this.timeOfJump;
          this.heightOfJump = 300;
          this.jumpVelocity = this.heightOfJump / this.timeOfJump;
+         this.gravity = 2;
 
          this.poweredUp = false;
          this.poweredUpDuration = 6000; //10 seconds~
@@ -43,7 +45,7 @@ class Player {
     //pObstacles for collision
     update(pCanvas, pObstacles, pWorldMatrix){
         let oldPos = this.mPosition;
-        this.newPosition(pWorldMatrix); //New position is meant to run when player inputs new direction
+        this.newPosition(pWorldMatrix, pObstacles); //New position is meant to run when player inputs new direction
         if (this.mAnimatedSpriteSheet.isFinished()){
             if (oldPos == this.mPosition){
                 UpdateSpriteSheet("Idle");
@@ -58,7 +60,7 @@ class Player {
         this.mAnimatedSpriteSheet.draw(this.mTransformMatrix);
     }   
 
-    newPosition(pWorldMatrix) {
+    newPosition(pWorldMatrix, pObstacles) {
         var x, y, translate, newPosition;
 
         x = this.getPosition().getX();
@@ -66,17 +68,48 @@ class Player {
 
         if (this.isJumping()){
             this.jump();
+            if (this.jumpCounter <= 0){
+                this.jumping = false;
+                this.UpdateSpriteSheet("Walk");
+                this.jumpCounter = this.timeOfJump;
+            }
+        }
+        else{
+            if(!this.collisionCheck(pObstacles)){
+                y += this.gravity;
+            }
         }
 
         newPosition = new Vector(x, y, 1);
-
-        translate = Matrix.createTranslation(newPosition);
+        this.setPosition(newPosition);
+        translate = Matrix.createTranslation(this.getPosition());
         this.mTransformMatrix = pWorldMatrix.multiply(translate);
     }
 
+    collisionCheck(pObstacles){
+        for (var i = 0; i < pObstacles.length; i++){
+            let vertices = pObstacles[i].getVertices();
+            let centerPos = this.getCenterPosition();
+            let vert0X = vertices[0].getX();
+            let vert1X = vertices[1].getX();
+            let vert2Y = vertices[2].getY();
+            if (centerPos.getX() + 80 < vert0X && centerPos.getX() + 560 > vert1X){
+                return false;
+            }
+            if (centerPos.getY() + 420 < vert2Y && centerPos.getY() + 50 <= vert2Y + 80){
+                if (centerPos.getY() + 30 <= vert2Y + 80){
+                    this.jumping = false;
+                }
+                return false;
+            }
+
+            return true;
+            
+        }
+    }
 
     getCenterPosition(){
-        return new Vector(this.getPosition().getX() + 270 / 2, this.getPosition().getY() + 270 / 2, 0);
+        return new Vector(this.getPosition().getX() + 270 / 2, this.getPosition().getY() - 270 / 2, 0);
     }
     
     getVertices(){
@@ -99,6 +132,7 @@ class Player {
     jump(){
         this.UpdateSpriteSheet("Jump");
         this.mPosition.setY(this.mPosition.getY() - this.jumpVelocity);
+        this.jumpCounter--;
     }
             //Idle, Walk, Bite, Claw, Jump, Howl, DoubleJump
   
