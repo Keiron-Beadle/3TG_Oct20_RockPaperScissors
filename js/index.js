@@ -119,6 +119,56 @@ function onLoad() {
         }
     }
 
+    function draw() {
+        context.drawImage(backgroundImage, -canvas.width / 2, - canvas.height / 2);
+        renderVisitor.visit(rootNode);
+      
+        drawScore();
+
+
+        // try Controls
+        // All those don't work but don't crash, They just stop the animation!
+
+        
+
+        // try Control
+        //document.addEventListener("keydown", keyDownHandler, false);
+        //document.addEventListener("keyup", keyUpHandler, false);
+
+        //setupKeyControls();
+        /*
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
+        if(rightPressed) {
+            //player.moveRight(canvas);
+            entities[0].moveRight(canvas);
+        }
+        else if(leftPressed) {
+            //player.moveLeft(canvas);
+            entities[0].moveLeft(canvas);
+        }
+        */
+        document.getElementById('down').onclick = function() {
+            //alert(moveY);
+            entities[0].moveDown();
+        }
+        
+        //document.addEventListener("keydown", change_direction);
+        //
+        for (var i = 0; i < entities.length; i++){
+            entities[i].draw(); //Draw all entities i.e. enemy/player
+        }
+
+        for (var i = 0; i < obstacles.length; i++){
+            obstacles[i].draw();
+        }
+
+        for (var i = 0; i < powerups.length; i++){
+            powerups[i].draw();
+        }
+    }
+
+    
     var rightPressed = false;
     var leftPressed = false;
 
@@ -139,67 +189,60 @@ function onLoad() {
         }
     }
 
-    function draw() {
-        context.drawImage(backgroundImage, -canvas.width / 2, - canvas.height / 2);
-        renderVisitor.visit(rootNode);
-
-        drawScore();
-
-        // try Control
-        //document.addEventListener("keydown", keyDownHandler, false);
-        //document.addEventListener("keyup", keyUpHandler, false);
-
-        //setupKeyControls();
-
-        /*
-        if(rightPressed) {
-            //player.moveRight(canvas);
-            entities[1].moveRight(canvas);
-        }
-        else if(leftPressed) {
-            //player.moveLeft(canvas);
-            entities[1].moveLeft(canvas);
-        }
-        */
-        
-        document.getElementById('down').onclick = function() {
-            //alert(moveY);
-            entities[1].moveDown();
-        }
-        
-        for (var i = 0; i < entities.length; i++){
-            entities[i].draw(); //Draw all entities i.e. enemy/player
-        }
-
-        for (var i = 0; i < obstacles.length; i++){
-            obstacles[i].draw();
-        }
-
-        for (var i = 0; i < powerups.length; i++){
-            powerups[i].draw();
-        }
+    function change_direction(event) 
+{  
+   const LEFT_KEY = 37;
+   const RIGHT_KEY = 39;
+   const UP_KEY = 38;
+   const DOWN_KEY = 40;
+ 
+   const keyPressed = event.keyCode;
+   const goingUp = dy === -10;
+   const goingDown = dy === 10;
+   const goingRight = dx === 10;  
+   const goingLeft = dx === -10;
+ 
+     if (keyPressed === LEFT_KEY && !goingRight){    
+        entities[0].moveLeft(canvas);
+        dx = -10;
+        dy = 0; 
+     }
+     if (keyPressed === UP_KEY && !goingDown){    
+        entities[0].moveUp(canvas);
+        dx = 0;
+        dy = -10;
     }
-
-    /*
+     if (keyPressed === RIGHT_KEY && !goingLeft){    
+        entities[0].moveRight(canvas);
+        dx = 10;
+        dy = 0;
+    }
+     if (keyPressed === DOWN_KEY && !goingUp){    
+        entities[0].moveDown(canvas);
+        dx = 0;
+        dy = 10;
+    }
+}
+    
     function setupKeyControls() {
         document.onkeydown = function(e) {
           switch (e.keyCode) {
             case 37:
-                entities[1].moveLeft(canvas);
+                entities[0].moveLeft(canvas);
                 break;
             case 38:
-                entities[1].moveRight(canvas);
+                entities[0].moveRight(canvas);
                 break;
             case 39:
-                entities[1].moveUp(canvas);
+                entities[0].moveUp(canvas);
                 break;
             case 40:
-                entities[1].moveDown(canvas);
+                entities[0].moveDown(canvas);
                 break;
           }
         };
     }
-    */
+    
           
     initialiseContext();
 

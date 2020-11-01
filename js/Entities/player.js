@@ -179,6 +179,7 @@ class Player {
         else {
             y -= 1;
         }
+        this.getPosition().setY(y);
     }
     moveDown(pCanvas) {
         var y = this.getPosition().getY();
@@ -192,7 +193,7 @@ class Player {
         }
         */
         y += 1;
-        this.setPosition(y);
+        this.getPosition().setY(y);
     }
     moveLeft(pCanvas) {
         var x = this.getPosition().getX();
@@ -202,7 +203,7 @@ class Player {
         else {
             x -= 1;
         }
-        this.setPosition(x);
+        this.getPosition().setX(x);
     }
     moveRight(pCanvas) {
         var x = this.getPosition().getX();
@@ -212,7 +213,7 @@ class Player {
         else {
             x += 1;
         }
-        this.setPosition(x);
+        this.getPosition().setX(x);
     }
     /*
     stopMove() {
