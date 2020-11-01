@@ -6,7 +6,7 @@ function onLoad() {
     var entities = [];
     var powerups = [];
     var obstacles = [];
-
+    var score = 0;
    
 
     function initialiseContext() {
@@ -68,6 +68,12 @@ function onLoad() {
         //
     }
 
+    function drawScore() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#db461b";
+        ctx.fillText("Score: "+score, 8, 20);
+    }
+
     function setCanvasOrigin(){
         var origin = new Vector(canvas.width /2, canvas.height /2, 1);
         var originMatrix = Matrix.createTranslation(origin);
@@ -86,6 +92,7 @@ function onLoad() {
             entities[i].update(canvas, obstacles, originMatrix); //Update all entities i.e. enemy/player
             if(entities[i].health == 0){
                 entities.splice(i, 1);
+                score++;
                 if (i == powerups.length){
                     break;
                 }
@@ -93,12 +100,7 @@ function onLoad() {
                     i--;
                 }
             }
-        }  
-        
-
-        for (var i = 0; i < obstacles.length; i++){
-            obstacles[i].update();
-        }
+        }      
 
         for (var i = 0; i < powerups.length; i++){
             powerups[i].update(player);
@@ -120,9 +122,19 @@ function onLoad() {
     function draw() {
         context.drawImage(backgroundImage, -canvas.width / 2, - canvas.height / 2);
         renderVisitor.visit(rootNode);
+      
+        drawScore();
+
 
         // try Controls
         // All those don't work but don't crash, They just stop the animation!
+
+        
+
+        // try Control
+        //document.addEventListener("keydown", keyDownHandler, false);
+        //document.addEventListener("keyup", keyUpHandler, false);
+
         //setupKeyControls();
         /*
         document.addEventListener("keydown", keyDownHandler, false);
