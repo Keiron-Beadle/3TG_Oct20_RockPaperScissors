@@ -60,18 +60,18 @@ function onLoad() {
         entities.push(player);
         entities.push(enemyTest);
         enemyTest.setTarget(player);
-        let powerupTest = new Powerup(context, new Vector(-399,0,1), originMatrix);
-        powerups.push(powerupTest);
+        //let powerupTest = new Powerup(context, new Vector(-399,0,1), originMatrix);
+        //powerups.push(powerupTest);
 
-        let platformTest = new Platform(context, new Vector(-50,350,1), 500, originMatrix);
-        obstacles.push(platformTest);
+        //let platformTest = new Platform(context, new Vector(-50,350,1), 500, originMatrix);
+        //obstacles.push(platformTest);
         //
     }
 
     function drawScore() {
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "#db461b";
-        ctx.fillText("Score: "+score, 8, 20);
+        //context.font = "16px Arial";
+       // context.fillStyle = "#db461b";
+        //context.fillText("Score: "+score, 8, 20);
     }
 
     function setCanvasOrigin(){
@@ -120,10 +120,10 @@ function onLoad() {
     }
 
     function draw() {
-        context.drawImage(backgroundImage, -canvas.width / 2, - canvas.height / 2);
-        renderVisitor.visit(rootNode);
-      
         drawScore();
+        context.drawImage(backgroundImage, -canvas.width / 2,  - canvas.height / 2);
+        renderVisitor.visit(rootNode);
+    
 
 
         // try Controls
