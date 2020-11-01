@@ -11,6 +11,9 @@ class Player {
          this.timeOfJump = 50;
          this.heightOfJump = 300;
          this.jumpVelocity = this.heightOfJump / this.timeOfJump;
+
+         this.poweredUp = false;
+         this.poweredUpDuration = 6000; //10 seconds~
          //Constructor
          // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
          
