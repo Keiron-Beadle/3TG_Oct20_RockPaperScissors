@@ -8,6 +8,7 @@ class AnimatedSpriteSheet {
         this.imageCountDimensions = [pNumOfImagesDimensions[0], pNumOfImagesDimensions[1]];
         this.mFrameIndex = 0;
         this.delay = pDelay;
+        this.finished = false;
         //this.mUpdateCounter = 0;
         //this.mUpdateLimit = 650;
 
@@ -36,6 +37,18 @@ class AnimatedSpriteSheet {
     setScale(pScale) {
         this.mScale = pScale;
     }
+    getImage(){
+        return this.mImage.src;
+    }
+    isFinished(){
+        if (this.mImage.src.includes("Demon-Walk")){
+            return false;
+        }
+        return this.finished;
+    }
+    resetFlag(){
+        this.finished = false;
+    }
     
     draw(pWorldMatrix) {
         var translate, scale, transform, rotation;
@@ -53,8 +66,7 @@ class AnimatedSpriteSheet {
         pWorldMatrix.setTransform(this.mContext);
     }    
 
-    drawAnimatedSprite() {       
-             
+    drawAnimatedSprite() {         
         var frameX, frameY, frameWidth, frameHeight;
         
         // Dims of our finale anime
@@ -76,7 +88,8 @@ class AnimatedSpriteSheet {
        
             if (deltaTime >= this.delay) {
                 if (this.mFrameIndex >= this.mNumFrames-1) { 
-                    this.mFrameIndex = 0;                   
+                    this.mFrameIndex = 0;     
+                    this.finished = true;              
                 }
                 else {
                     this.mFrameIndex += 1;

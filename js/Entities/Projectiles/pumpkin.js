@@ -7,8 +7,8 @@ class Pumpkin extends Projectile{
         super.update(this.speed);
     }
 
-    draw(pTransMat){
-        super.draw(pTransMat);
+    draw(){
+        super.draw();
     }
 
 }
