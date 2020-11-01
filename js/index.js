@@ -76,6 +76,9 @@ function onLoad() {
         for (var i = 0; i < entities.length; i++){
             entities[i].update(canvas, obstacles, originMatrix); //Update all entities i.e. enemy/player
         }
+        if(entities[0].health == 0){
+            location.reload();
+        }
     }
 
     function draw() {

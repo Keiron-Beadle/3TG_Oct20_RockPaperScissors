@@ -11,6 +11,7 @@ class Player {
          this.timeOfJump = 50;
          this.heightOfJump = 300;
          this.jumpVelocity = this.heightOfJump / this.timeOfJump;
+         this.health = 100; //Player Health
          //Constructor
          // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
          
@@ -98,7 +99,7 @@ class Player {
         x = this.getPosition().getX();
         y = this.getPosition().getY();
 
-        if (this.isJumping){
+        if (this.isJumping()){
             this.jump();
         }
 
