@@ -192,7 +192,7 @@ class Player {
         werewolfImages[this.JUMP].src = "SpriteSheets/Werewolf-Jump.png";
         werewolfImages[this.DOUBLEJUMP].src = "SpriteSheets/Werewolf-DoubleJump.png";
 
-        let beewolfImages = [new Image(), new Image, new Image(), new Image(), new Image(), new Image(), new Image()];
+        let beewolfImages = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image()];
         beewolfImages[this.IDLE].src = "SpriteSheets/Beewolf-Idle.png";
         beewolfImages[this.WALK].src = "SpriteSheets/Beewolf-Walk.png";
         beewolfImages[this.BITE].src = "SpriteSheets/Beewolf-Bite.png";
