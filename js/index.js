@@ -69,9 +69,9 @@ function onLoad() {
     }
 
     function drawScore() {
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "#db461b";
-        ctx.fillText("Score: "+score, 8, 20);
+        context.font = "16px Arial";
+        context.fillStyle = "#db461b";
+        context.fillText("Score: "+score, -650, -350);
     }
 
     function setCanvasOrigin(){
