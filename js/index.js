@@ -136,35 +136,28 @@ function onLoad() {
         //document.addEventListener("keyup", keyUpHandler, false);
 
         //setupKeyControls();
-        /*
+        
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);
         if(rightPressed) {
-            //player.moveRight(canvas);
             entities[0].moveRight(canvas);
         }
         else if(leftPressed) {
-            //player.moveLeft(canvas);
             entities[0].moveLeft(canvas);
         }
-        */
-       
-       document.getElementById('up').onclick = function() {
-        entities[0].moveUp();
+        else if(upPressed) {
+            entities[0].moveUp(canvas);
         }
-        document.getElementById('down').onclick = function() {
-            entities[0].moveDown();
+        else if(downPressed) {
+            entities[0].moveDown(canvas);
         }
-        document.getElementById('left').onclick = function() {
-            entities[0].moveLeft();
-        }
-        document.getElementById('right').onclick = function() {
-            entities[0].moveRight();
-        }
-        
+
+
         
         //document.addEventListener("keydown", change_direction);
         //
+
+        moveUpdate();
         for (var i = 0; i < entities.length; i++){
             entities[i].draw(); //Draw all entities i.e. enemy/player
         }
@@ -178,24 +171,51 @@ function onLoad() {
         }
     }
 
-    
+    function moveUpdate() {
+        document.getElementById('up').onclick = function() {
+            entities[0].moveUp();
+            }
+            document.getElementById('down').onclick = function() {
+                entities[0].moveDown();
+            }
+            document.getElementById('left').onclick = function() {
+                entities[0].moveLeft();
+            }
+            document.getElementById('right').onclick = function() {
+                entities[0].moveRight();
+            }    
+    }
+
     var rightPressed = false;
     var leftPressed = false;
-
+    var upPressed = false;
+    var downPressed = false;
     function keyDownHandler(e) {
-        if(e.key == "Right" || e.key == "ArrowRight") {
+        if(e.key == "right" || e.key == "ArrowRight") {
             rightPressed = true;
         }
-        else if(e.key == "Left" || e.key == "ArrowLeft") {
+        else if(e.key == "left" || e.key == "ArrowLeft") {
             leftPressed = true;
+        }
+        else if(e.key == "up" || e.key == "ArrowUp") {
+            upPressed = true;
+        }
+        else if(e.key == "down" || e.key == "ArrowDown") {
+            downPressed = true;
         }
     }
     function keyUpHandler(e) {
-        if(e.key == "Right" || e.key == "ArrowRight") {
+        if(e.key == "right" || e.key == "ArrowRight") {
             rightPressed = false;
         }
-        else if(e.key == "Left" || e.key == "ArrowLeft") {
+        else if(e.key == "left" || e.key == "ArrowLeft") {
             leftPressed = false;
+        }
+        else if(e.key == "up" || e.key == "ArrowUp") {
+            upPressed = false;
+        }
+        else if(e.key == "down" || e.key == "ArrowDown") {
+            downPressed = false;
         }
     }
 
