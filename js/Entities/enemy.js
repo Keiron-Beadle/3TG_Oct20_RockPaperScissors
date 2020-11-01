@@ -9,31 +9,33 @@ class Enemy{
         this.updateDelay = 400; //Delay between running pathfinding algorithm, if i did this every frame we'd stutter
         this.attackDelay = 0; //Delay between attacks once in "Attack" mode.
         this.transformMatrix; //Transform of the enemy
-
         var enemyImage = new Image();
         enemyImage.src = this.sprite;
+        this.SPAWN = 0;
+        this.WALK = 1;
+        this.PUMPKIN = 2;
+        this.DEATH = 3;
+        this.BAT = 4;
+        let spriteImages = [new Image(),new Image(),new Image(),new Image(),new Image()];
+        spriteImages[this.SPAWN].src = "SpriteSheets/Demon-Spawn.png";
+        spriteImages[this.WALK].src = "SpriteSheets/Demon-Walk.png";
+        spriteImages[this.PUMPKIN].src = "SpriteSheets/Demon-Pumpkin.png";
+        spriteImages[this.DEATH].src = "SpriteSheets/Demon-Death.png";
+        spriteImages[this.BAT].src = "SpriteSheets/Demon-Bat.png";
+        this.spriteArray = [ 
+            new AnimatedSpriteSheet(this.mainContext, this.position,
+                0, new Vector(1,1,1), spriteImages[this.SPAWN], 4, 270, 270, [2,2]),
+            new AnimatedSpriteSheet(this.mainContext, this.position,
+                0, new Vector(1,1,1), spriteImages[this.WALK], 4, 270, 270, [2,2]),
+            new AnimatedSpriteSheet(this.mainContext, this.position,
+                0, new Vector(1,1,1), spriteImages[this.PUMPKIN], 10, 270, 270, [3,4]),
+            new AnimatedSpriteSheet(this.mainContext, this.position,
+                0, new Vector(1,1,1), spriteImages[this.DEATH], 9, 270, 270, [3,3]),
+            new AnimatedSpriteSheet(this.mainContext, this.position,
+                0, new Vector(1,1,1), spriteImages[this.BAT], 14, 270, 270, [4,4])
+        ];
 
-        if(pSprite == "SpriteSheets/Demon-Walk.png"){
-            this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
-                0, new Vector(1,1,1), enemyImage, 4, 270, 270, [2,2]);
-         }
-        else if(pSprite == "SpriteSheets/Demon-Spawn.png"){
-            this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
-                0, new Vector(1,1,1), enemyImage, 4, 270, 270, [2,2]);
-         }
-         else if(pSprite == "SpriteSheets/Demon-Pumpkin.png"){
-            this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
-                0, new Vector(1,1,1), enemyImage, 10, 270, 270, [3,4]);
-         }
-         else if(pSprite == "SpriteSheets/Demon-Death.png"){
-            this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
-                0, new Vector(1,1,1), enemyImage, 9, 270, 270, [3,3]);
-         }
-         else if(pSprite == "SpriteSheets/Demon-Bat.png"){
-            this.enemySpriteSheet = new AnimatedSpriteSheet(this.mainContext, this.position,
-                0, new Vector(1,1,1), enemyImage, 14, 270, 270, [4,4]);
-         }
-        
+        this.currentSprite = this.spriteArray[this.SPAWN];
 
         this.AI = new EnemyAI(this.visibilityBubble);
     }
@@ -55,7 +57,7 @@ class Enemy{
             this.goal = this.AI.update(this.position, this.getTarget(), pObstacles, pCanvas);
             currentAIState = this.AI.getState();
             if (currentAIState == "Attacking" && this.attackDelay <= 0){
-                this.attack(pWorldMat); //If we're attacking, and the attack is ready, run attack function.
+                this.attack(); //If we're attacking, and the attack is ready, run attack function.
                 this.attackDelay = 600; 
             }
 
@@ -71,21 +73,50 @@ class Enemy{
         else{
             this.speed = 0.4;
         }
-
-        for (var i = 0; i < this.projectiles.length; i++)
-        {
-            //Update any projectiles the enemy has fired
-            this.projectiles[i].update();
-        }
         this.updateDelay--;
         this.attackDelay--;
-        this.enemySpriteSheet.update(); //Updates the spritesheet animation for Enemy
+        this.TestIfAnimationFinished(pWorldMat);
+        this.currentSprite.update(); //Updates the spritesheet animation for Enemy
+        for (var i = 0; i < this.projectiles.length; i++)
+        {
+            if (!this.projectiles[i].alive){
+                this.projectiles.splice(i, 1);
+                if (i == this.projectiles.length){
+                    break;
+                }
+            }
+            this.projectiles[i].update();
+        }
         pWorldMat.setTransform(this.mainContext);
     }
 
-    attack(pWorldMat){
-        this.projectiles.push(new Pumpkin(this.mainContext, this.getTarget(), this.position, pWorldMat));
-        
+    draw(){
+        this.currentSprite.draw(this.transformMatrix);
+
+        for (var i = 0; i < this.projectiles.length; i++)
+        {
+            this.projectiles[i].draw();
+        }
+    }   
+
+    TestIfAnimationFinished(pWorldMat) {
+        if (this.currentSprite.isFinished()) {
+            let type = this.currentSprite.getImage();
+            if (type.includes("Demon-Spawn")) {
+                this.currentSprite = this.spriteArray[this.WALK];
+                this.currentSprite.resetFlag();
+            }
+            else if (type.includes("Demon-Pumpkin")){
+                this.currentSprite = this.spriteArray[this.WALK];
+                this.currentSprite.resetFlag();
+                this.projectiles.push(new Pumpkin(this.mainContext, this.getTarget(), this.position, pWorldMat));
+            }
+        }
+    }
+
+    attack(){
+        this.currentSprite = this.spriteArray[this.PUMPKIN];
+        this.currentSprite.resetFlag();
     }
 
     moveToGoal(pWorldMat){
@@ -108,13 +139,4 @@ class Enemy{
         translate = Matrix.createTranslation(this.position);
         this.transformMatrix = pWorldMat.multiply(translate);
     }
-
-    draw(){
-        this.enemySpriteSheet.draw(this.transformMatrix);
-
-        for (var i = 0; i < this.projectiles.length; i++)
-        {
-            this.projectiles[i].draw(this.transformMatrix);
-        }
-    }   
 }

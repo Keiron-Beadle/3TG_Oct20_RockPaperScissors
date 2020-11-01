@@ -1,14 +1,15 @@
 class Pumpkin extends Projectile{
     constructor(pMainContext, pTarget, pStartPos, pWorldMat){
-        super(pMainContext, pTarget, pStartPos, "SpriteSheets/Pumpkin-Flying.png", 4, 270, 270, [2,2], 1.1, pWorldMat);
+        let spriteArray = ["SpriteSheets/Pumpkin-Flying.png", "SpriteSheets/Pumpkin-Splat.png"];
+        super(pMainContext, pTarget, pStartPos, spriteArray, 4, 270, 270, [2,2], 1.7, pWorldMat);
     }
 
     update(){
         super.update(this.speed);
     }
 
-    draw(pTransMat){
-        super.draw(pTransMat);
+    draw(){
+        super.draw();
     }
 
 }
