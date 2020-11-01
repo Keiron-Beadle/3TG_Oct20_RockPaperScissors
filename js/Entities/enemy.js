@@ -79,7 +79,12 @@ class Enemy{
         this.currentSprite.update(); //Updates the spritesheet animation for Enemy
         for (var i = 0; i < this.projectiles.length; i++)
         {
-            //Update any projectiles the enemy has fired
+            if (!this.projectiles[i].alive){
+                this.projectiles.splice(i, 1);
+                if (i == this.projectiles.length){
+                    break;
+                }
+            }
             this.projectiles[i].update();
         }
         pWorldMat.setTransform(this.mainContext);
@@ -104,7 +109,9 @@ class Enemy{
             else if (type.includes("Demon-Pumpkin")){
                 this.currentSprite = this.spriteArray[this.WALK];
                 this.currentSprite.resetFlag();
-                //this.projectiles.push(new Pumpkin(this.mainContext, this.getTarget(), this.position, pWorldMat));
+
+                this.projectiles.push(new Pumpkin(this.mainContext, this.getTarget(), this.position, pWorldMat));
+
             }
         }
     }
