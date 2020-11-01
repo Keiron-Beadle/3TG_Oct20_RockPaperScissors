@@ -60,7 +60,7 @@ function onLoad() {
         entities.push(player);
         entities.push(enemyTest);
         enemyTest.setTarget(player);
-        let powerupTest = new Powerup(context, new Vector(0,0,1), originMatrix);
+        let powerupTest = new Powerup(context, new Vector(-399,0,1), originMatrix);
         powerups.push(powerupTest);
 
         let platformTest = new Platform(context, new Vector(-50,350,1), 500, originMatrix);
@@ -84,7 +84,17 @@ function onLoad() {
     function update(){
         for (var i = 0; i < entities.length; i++){
             entities[i].update(canvas, obstacles, originMatrix); //Update all entities i.e. enemy/player
-        }
+            if(entities[i].health == 0){
+                entities.splice(i, 1);
+                if (i == powerups.length){
+                    break;
+                }
+                else{
+                    i--;
+                }
+            }
+        }  
+        
 
         for (var i = 0; i < obstacles.length; i++){
             obstacles[i].update();

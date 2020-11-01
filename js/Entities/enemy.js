@@ -9,8 +9,9 @@ class Enemy{
         this.updateDelay = 400; //Delay between running pathfinding algorithm, if i did this every frame we'd stutter
         this.attackDelay = 0; //Delay between attacks once in "Attack" mode.
         this.transformMatrix; //Transform of the enemy
-        this.health = 10;
+        this.startedDying = false;
         var enemyImage = new Image();
+        this.health = 1;
         enemyImage.src = this.sprite;
         this.SPAWN = 0;
         this.WALK = 1;
@@ -74,6 +75,18 @@ class Enemy{
         else{
             this.speed = 0.4;
         }
+
+        if (this.checkIfCollided(this.getTarget())){
+            this.killSelf();            
+        }
+
+        if (this.startedDying){
+            this.currentSprite.update();
+            if (this.currentSprite.isFinished()){
+               this.health = 0;
+            }              
+        }
+
         this.updateDelay--;
         this.attackDelay--;
         this.TestIfAnimationFinished(pWorldMat);
@@ -89,6 +102,26 @@ class Enemy{
             this.projectiles[i].update();
         }
         pWorldMat.setTransform(this.mainContext);
+    }
+
+    checkIfCollided(pTarget){
+        let targetPos = pTarget.getPosition();
+        let targetPosXMax = targetPos.getX() + 40;
+        let targetPosXMin = targetPos.getX() - 40;
+        let targetPosYMax = targetPos.getY() + 80;
+        let targetPosYMin = targetPos.getY() - 80;
+
+        if (this.position.getX() <= targetPosXMax && this.position.getX() >= targetPosXMin
+        && this.position.getY() <= targetPosYMax && this.position.getY() >= targetPosYMin){
+            return true;
+        }
+
+        return false;
+    }
+
+    killSelf(){
+        this.currentSprite = this.spriteArray[this.DEATH];
+        this.startedDying = true;        
     }
 
     draw(){
