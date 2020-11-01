@@ -101,7 +101,7 @@ class Player {
         x = this.getPosition().getX();
         y = this.getPosition().getY();
 
-        if (this.isJumping){
+        if (this.isJumping()){
             this.jump();
         }
 

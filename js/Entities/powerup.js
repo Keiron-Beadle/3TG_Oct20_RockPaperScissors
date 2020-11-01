@@ -5,21 +5,26 @@ class Powerup{
         this.worldMatrix = pWorldMat;
         this.transformMatrix;
         let beehiveIdleSprite = new Image();
-        beehiveIdleSprite.src = "SpriteSheets/Beehive_idle gif.png";
+        beehiveIdleSprite.src = "SpriteSheets/Beehive-Idle.png";
         this.sprite = new AnimatedSpriteSheet(pMainContext, this.position, 0, new Vector(1,1,1),
-        beehiveIdleSprite, 2, 270, 270, [1,1], 250);
-        // pContext, pPosition, pRotation, pScale, pImage, pNumFrames, pFrameSizeX, pFrameSizeY, pNumOfImagesDimensions, pDelay = 100
+        beehiveIdleSprite, 2, 270, 270, [1,1], 200);
     }
 
     pickup(){
         this.alive = false;
     }
 
+    isAlive(){
+        return this.alive;
+    }
+
     update(pPlayer){
         if (this.checkIfCollided(pPlayer)){
-            pickup();
+            this.pickup();
             pPlayer.poweredUp = true;
         }
+        this.sprite.update();
+        this.transformMatrix = this.worldMatrix.multiply(Matrix.createTranslation(this.position));
     }
 
     checkIfCollided(pPlayer){
@@ -40,6 +45,6 @@ class Powerup{
     }
 
     draw(){
-
+        this.sprite.draw(this.transformMatrix);
     }
 }
