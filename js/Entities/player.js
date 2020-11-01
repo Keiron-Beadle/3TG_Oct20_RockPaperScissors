@@ -158,9 +158,10 @@ class Player {
                 anim =  this.DOUBLEJUMP;
                 break;
         }
-        if (this.poweredUp) {
+        if (this.poweredUp == true) {
             if (this.mAnimatedSpriteSheet != this.beewolfSprites[anim]) {
                 this.mAnimatedSpriteSheet = this.beewolfSprites[anim];
+                var b = 1;
             }
         }
         else {
