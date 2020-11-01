@@ -116,7 +116,7 @@ function onLoad() {
     }
 
     function draw() {
-        context.drawImage(backgroundImage, -canvas.width / 2, - canvas.height / 2);
+        context.drawImage(backgroundImage, -canvas.width / 2 + 135,  - canvas.height / 2 - 100);
         renderVisitor.visit(rootNode);
 
         // try Controls
