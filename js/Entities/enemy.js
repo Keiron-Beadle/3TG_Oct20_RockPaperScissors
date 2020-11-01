@@ -109,9 +109,7 @@ class Enemy{
             else if (type.includes("Demon-Pumpkin")){
                 this.currentSprite = this.spriteArray[this.WALK];
                 this.currentSprite.resetFlag();
-
                 this.projectiles.push(new Pumpkin(this.mainContext, this.getTarget(), this.position, pWorldMat));
-
             }
         }
     }
