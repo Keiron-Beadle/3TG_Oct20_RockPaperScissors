@@ -41,7 +41,7 @@ class AnimatedSpriteSheet {
         return this.mImage.src;
     }
     isFinished(){
-        if (this.mImage.src.includes("Demon-Walk")){
+        if (this.mImage.src.includes("Walk") || this.mImage.src.includes("Idle")){
             return false;
         }
         return this.finished;

@@ -52,13 +52,13 @@ function onLoad() {
         //Keiron's Enemy Test
         //enemyTest = new Enemy(context, new Vector(100,25,1), 'SpriteSheets/Demon-Walk.png');
         //player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf-Idle.png');
-        enemyTest = new Enemy(context, new Vector(0,15,1), 'SpriteSheets/Demon-Walk.png');
-        player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf-Idle.png');
+        //enemyTest = new Enemy(context, new Vector(0,15,1), 'SpriteSheets/Demon-Walk.png');
+        player = new Player(context, new Vector(-400,0,1));
         entities.push(player);
-        entities.push(enemyTest);
-        enemyTest.setTarget(player);
-        let powerupTest = new Powerup(context, new Vector(0,0,1), originMatrix);
-        powerups.push(powerupTest);
+        //entities.push(enemyTest);
+        //enemyTest.setTarget(player);
+        //let powerupTest = new Powerup(context, new Vector(0,0,1), originMatrix);
+        //powerups.push(powerupTest);
         //
     }
 
