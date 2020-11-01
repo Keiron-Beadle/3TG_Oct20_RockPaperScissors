@@ -9,6 +9,7 @@ class Enemy{
         this.updateDelay = 400; //Delay between running pathfinding algorithm, if i did this every frame we'd stutter
         this.attackDelay = 0; //Delay between attacks once in "Attack" mode.
         this.transformMatrix; //Transform of the enemy
+        this.health = 10;
         var enemyImage = new Image();
         enemyImage.src = this.sprite;
         this.SPAWN = 0;

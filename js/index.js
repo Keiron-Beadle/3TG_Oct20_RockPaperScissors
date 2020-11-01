@@ -92,6 +92,9 @@ function onLoad() {
                 }
             }
         }
+        if(entities[0].health == 0){
+            location.reload();
+        }
     }
 
     function draw() {

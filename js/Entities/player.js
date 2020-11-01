@@ -12,6 +12,9 @@ class Player {
 
          this.poweredUp = false;
          this.poweredUpDuration = 6000; //10 seconds~
+         this.health = 100; //Player Health
+         //Constructor
+         // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
          
          this.IDLE = 0;
          this.WALK = 1;
