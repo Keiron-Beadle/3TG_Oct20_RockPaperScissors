@@ -41,6 +41,7 @@ class Projectile{
             this.moveProjectile();
             if (this.checkIfCollided(this.target)){
                 this.killSelf();
+                this.target.health = this.target.health - 10;            
             }   
         }
         else{
