@@ -68,9 +68,11 @@ class Projectile{
 
     moveProjectile() {
         let targetPos = this.target.getPosition();
+
         let XComparison = this.position.getX() != targetPos.getX();
         let YComparison = this.position.getY() != targetPos.getY();
         if (XComparison && YComparison) {
+
             this.position = this.position.add(this.velocityVector);
             this.transformMatrix = this.worldMatrix.multiply(Matrix.createTranslation(this.position));
         }
