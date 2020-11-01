@@ -1,5 +1,5 @@
 class AnimatedSpriteSheet {
-    constructor(pContext, pPosition, pRotation, pScale, pImage, pNumFrames, pFrameSizeX, pFrameSizeY, pNumOfImagesDimensions) { 
+    constructor(pContext, pPosition, pRotation, pScale, pImage, pNumFrames, pFrameSizeX, pFrameSizeY, pNumOfImagesDimensions, pDelay = 100) { 
         this.mContext = pContext;
         this.mImage = pImage;
         this.mNumFrames = pNumFrames;
@@ -7,6 +7,8 @@ class AnimatedSpriteSheet {
         this.mFrameSizeY = pFrameSizeY;
         this.imageCountDimensions = [pNumOfImagesDimensions[0], pNumOfImagesDimensions[1]];
         this.mFrameIndex = 0;
+        this.delay = pDelay;
+        this.finished = false;
         //this.mUpdateCounter = 0;
         //this.mUpdateLimit = 650;
 
@@ -35,14 +37,27 @@ class AnimatedSpriteSheet {
     setScale(pScale) {
         this.mScale = pScale;
     }
+    getImage(){
+        return this.mImage.src;
+    }
+    isFinished(){
+        if (this.mImage.src.includes("Walk") || this.mImage.src.includes("Idle")){
+            return false;
+        }
+        return this.finished;
+    }
+    resetFlag(){
+        this.finished = false;
+    }
     
     draw(pWorldMatrix) {
         var translate, scale, transform, rotation;
         
-        translate = Matrix.createTranslation(this.getPosition());
-        rotation = Matrix.createRotation(this.getRotation());
-        scale = Matrix.createScale(this.getScale());
-        transform = pWorldMatrix.multiply(translate.multiply(rotation.multiply(scale)));
+        //translate = Matrix.createTranslation(this.getPosition());
+        //rotation = Matrix.createRotation(this.getRotation());
+        //scale = Matrix.createScale(this.getScale());
+        //transform = pWorldMatrix.multiply(translate.multiply(rotation.multiply(scale)));
+        transform = pWorldMatrix;
         
         transform.setTransform(this.mContext);
 
@@ -51,8 +66,7 @@ class AnimatedSpriteSheet {
         pWorldMatrix.setTransform(this.mContext);
     }    
 
-    drawAnimatedSprite() {       
-             
+    drawAnimatedSprite() {         
         var frameX, frameY, frameWidth, frameHeight;
         
         // Dims of our finale anime
@@ -67,26 +81,25 @@ class AnimatedSpriteSheet {
     }
     
     update() {
-        var thisTime, deltaTime, delay;
+        var thisTime, deltaTime;
 
         thisTime = Date.now();
         deltaTime = thisTime - this.mLastTime;
-
-        delay = 100;
        
-            if (deltaTime >= delay) {
+            if (deltaTime >= this.delay) {
                 if (this.mFrameIndex >= this.mNumFrames-1) { 
-                    this.mFrameIndex = 0;                   
+                    this.mFrameIndex = 0;     
+                    this.finished = true;              
                 }
                 else {
                     this.mFrameIndex += 1;
                 }
             
-                if ((deltaTime - delay) > delay){
+                if ((deltaTime - this.delay) > this.delay){
                     this.mLastTime = thisTime;
                 } 
                 else {
-                this.mLastTime += delay;
+                this.mLastTime += this.delay;
                 }
             }
     }

@@ -1,9 +1,10 @@
 function onLoad() {
     var canvas, context, originMatrix;
-    var image;
+    var backgroundImage;
     var rootNode, renderVisitor;
     var enemyTest, player;
     var entities = [];
+    var powerups = [];
     var obstacles = [];
 
    
@@ -39,7 +40,8 @@ function onLoad() {
             }
         }
         */
-        image = new Image();
+        backgroundImage = new Image();
+        backgroundImage.src="SpriteSheets/Background.png";
         originMatrix = setCanvasOrigin();
         renderVisitor = new RenderVisitor(context);
         rootNode = new TransformNode("Root", originMatrix);
@@ -51,11 +53,15 @@ function onLoad() {
         //
 
         //Keiron's Enemy Test
-        enemyTest = new Enemy(context, new Vector(100,50,1), 'SpriteSheets/Demon-Walk.png');
-        player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf_walk.png');
-        entities.push(enemyTest);
+        //enemyTest = new Enemy(context, new Vector(100,25,1), 'SpriteSheets/Demon-Walk.png');
+        //player = new Player(context, new Vector(-200,0,1), 'SpriteSheets/Werewolf-Idle.png');
+        enemyTest = new Enemy(context, new Vector(0,15,1), 'SpriteSheets/Demon-Walk.png');
+        player = new Player(context, new Vector(-400,0,1));
         entities.push(player);
+        entities.push(enemyTest);
         enemyTest.setTarget(player);
+        let powerupTest = new Powerup(context, new Vector(0,0,1), originMatrix);
+        powerups.push(powerupTest);
         //
     }
 
@@ -75,6 +81,22 @@ function onLoad() {
     function update(){
         for (var i = 0; i < entities.length; i++){
             entities[i].update(canvas, obstacles, originMatrix); //Update all entities i.e. enemy/player
+        }
+
+        for (var i = 0; i < powerups.length; i++){
+            powerups[i].update(player);
+            if (!powerups[i].isAlive()){
+                powerups.splice(i, 1);
+                if (i == powerups.length){
+                    break;
+                }
+                else{
+                    i--;
+                }
+            }
+        }
+        if(entities[0].health == 0){
+            location.reload();
         }
     }
 
@@ -99,7 +121,7 @@ function onLoad() {
     }
 
     function draw() {
-        context.clearRect(-canvas.width / 2, - canvas.height / 2, canvas.width, canvas.height);
+        context.drawImage(backgroundImage, -canvas.width / 2, - canvas.height / 2);
         renderVisitor.visit(rootNode);
 
         // try Control
@@ -126,6 +148,10 @@ function onLoad() {
         
         for (var i = 0; i < entities.length; i++){
             entities[i].draw(); //Draw all entities i.e. enemy/player
+        }
+
+        for (var i = 0; i < powerups.length; i++){
+            powerups[i].draw();
         }
     }
 
