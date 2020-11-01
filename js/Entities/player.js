@@ -275,6 +275,7 @@ class Player {
         //Idle, Walk, Bite, Claw, Jump, Howl, DoubleJump
         //Constructor
         // MainContext, Position, Rotation, Scale (Vector), SpriteSheet, NumOfFrames, Size of Individual Frame , <-- , Size of spritesheet
+        /*
         this.werewolfSprites = [
             new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
                 0, new Vector(1, 1, 1), werewolfImages[0], 2, 270, 270, [1, 1], 300),
@@ -304,6 +305,21 @@ class Player {
             new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
                 0, new Vector(1, 1, 1), beewolfImages[5], 9, 270, 270, [3, 3])
         ];
+        */
+       this.werewolfSprites = [
+        new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+            0, new Vector(1, 1, 1), beewolfImages[0], 4, 270, 270, [2, 2]),
+        new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+            0, new Vector(1, 1, 1), beewolfImages[1], 9, 270, 270, [3, 3]),
+        new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+            0, new Vector(1, 1, 1), beewolfImages[2], 5, 270, 270, [2, 3]),
+        new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+            0, new Vector(1, 1, 1), beewolfImages[3], 6, 270, 270, [2, 3]),
+        new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+            0, new Vector(1, 1, 1), beewolfImages[4], 5, 270, 270, [2, 3]),
+        new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
+            0, new Vector(1, 1, 1), beewolfImages[5], 9, 270, 270, [3, 3])
+    ];
     }
     /*
     setupKeyControls() {
