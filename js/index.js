@@ -63,8 +63,8 @@ function onLoad() {
         //let powerupTest = new Powerup(context, new Vector(-399,0,1), originMatrix);
         //powerups.push(powerupTest);
 
-        //let platformTest = new Platform(context, new Vector(-50,350,1), 500, originMatrix);
-        //obstacles.push(platformTest);
+        let platformTest = new Platform(context, new Vector(-50,350,1), 500, originMatrix);
+        obstacles.push(platformTest);
         //
     }
 
@@ -101,6 +101,10 @@ function onLoad() {
                 }
             }
         }      
+
+        for (var i = 0; i < obstacles.length; i++){
+            obstacles[i].update();
+        }
 
         for (var i = 0; i < powerups.length; i++){
             powerups[i].update(player);
