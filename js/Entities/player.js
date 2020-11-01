@@ -173,12 +173,15 @@ class Player {
 
     moveUp(pCanvas) {
         var y = this.getPosition().getY();
+        /*
         if (y < 0){
             y = 0;
         }
         else {
-            y -= 1;
+            y -= 10;
         }
+        */
+        y -= 10;
         this.getPosition().setY(y);
     }
     moveDown(pCanvas) {
@@ -192,27 +195,33 @@ class Player {
             y += 1;
         }
         */
-        y += 1;
+        y += 10;
         this.getPosition().setY(y);
     }
     moveLeft(pCanvas) {
         var x = this.getPosition().getX();
+        /*
         if (x < 0){
             x = 0;
         }
         else {
-            x -= 1;
+            x -= 10;
         }
+        */
+        x -= 10;
         this.getPosition().setX(x);
     }
     moveRight(pCanvas) {
         var x = this.getPosition().getX();
+        /*
         if (x + this.mPlayerImage.width > pCanvas.width){
             x = pCanvas.width - this.mPlayerImage.width;
         }
         else {
-            x += 1;
+            x += 10;
         }
+        */
+        x += 10;
         this.getPosition().setX(x);
     }
     /*
