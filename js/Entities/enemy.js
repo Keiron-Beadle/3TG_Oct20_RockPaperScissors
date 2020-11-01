@@ -50,6 +50,10 @@ class Enemy{
         return this.target;
     }
 
+    getPosition(){
+        return this.position;
+    }
+
     update(pCanvas, pObstacles, pWorldMat){
         this.moveToGoal(pWorldMat);
         let currentAIState = this.AI.getState(); //Gets current state of enemy

@@ -15,7 +15,7 @@ class Projectile{
             this.projectileImageArray[1], pNumOfFrames, pFrameSizeX, pFrameSizeY, pNumOfImagesDimensions)
         ];
         this.currentSprite = this.spriteArray[0];
-        let remainingVec = this.target.getPosition().subtract(this.position).add(new Vector(0,-70,0));
+        let remainingVec = this.target.subtract(this.position).add(new Vector(0,-70,0));
         this.velocityVector = remainingVec.normalise().multiply(pSpeed);
         this.transformMatrix;
         this.startedDying = false;
@@ -41,7 +41,7 @@ class Projectile{
             this.moveProjectile();
             if (this.checkIfCollided(this.target)){
                 this.killSelf();
-                this.target.health = this.target.health - 10;            
+                //this.target.health = this.target.health - 10;            
             }   
         }
         else{
@@ -53,7 +53,7 @@ class Projectile{
     }   
 
     checkIfCollided(pTarget){
-        let targetPos = pTarget.getPosition();
+        let targetPos = pTarget;
         let targetPosXMax = targetPos.getX() + 40;
         let targetPosXMin = targetPos.getX() - 40;
         let targetPosYMax = targetPos.getY() + 80;
@@ -68,15 +68,15 @@ class Projectile{
     }
 
     moveProjectile() {
-        let targetPos = this.target.getPosition();
+        let targetPos = this.target;
 
-        let XComparison = this.position.getX() != targetPos.getX();
-        let YComparison = this.position.getY() != targetPos.getY();
-        if (XComparison && YComparison) {
+        //let XComparison = this.position.getX() != targetPos.getX();
+       // let YComparison = this.position.getY() != targetPos.getY();
+        //if (XComparison && YComparison) {
 
             this.position = this.position.add(this.velocityVector);
             this.transformMatrix = this.worldMatrix.multiply(Matrix.createTranslation(this.position));
-        }
+        //}
     }
 
     draw(){

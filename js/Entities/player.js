@@ -1,5 +1,5 @@
 function onClick(event){
-    Player.mousePos = new Vector(event.X, event.Y);
+    Player.mousePos = new Vector(event.clientX, event.clientY, 0);
 }
 
 class Player {
@@ -9,6 +9,9 @@ class Player {
          this.setPosition(pPosition);
          this.mMainContext = pMainContext;
          this.mTransformMatrix;
+         this.fireRate = 600;
+         this.pumpkinDelay = 0;
+         this.projectiles = [];
 
          this.canJump = true;
          this.jumping = false;
@@ -58,9 +61,25 @@ class Player {
             }
             this.UpdateSpriteSheet("Idle");
         }
+
+        if (this.pumpkinDelay <= 0 && Player.mousePos != null){ 
+            //pMainContext, pTarget, pStartPos, pWorldMat
+            let newPumpkin = new Pumpkin(this.mMainContext, Player.mousePos, this.getPosition(), pWorldMatrix);
+            this.projectiles.push(newPumpkin);
+            this.pumpkinDelay = this.fireRate; 
+            Player.mousePos = null;
+            
+        }
+        this.pumpkinDelay--;
+        for (var i = 0; i < this.projectiles.length; i++){
+            this.projectiles[i].update();
+        }
         this.mAnimatedSpriteSheet.update();
     }
     draw(){
+        for (var i = 0; i < this.projectiles.length; i++){
+            this.projectiles[i].draw();
+        }
         this.mAnimatedSpriteSheet.draw(this.mTransformMatrix);
     }   
 
@@ -137,7 +156,7 @@ class Player {
         this.UpdateSpriteSheet("Jump");
         this.mPosition.setY(this.mPosition.getY() - this.jumpVelocity);
         this.jumpCounter--;
-    }
+    } 
             //Idle, Walk, Bite, Claw, Jump, Howl, DoubleJump
   
     UpdateSpriteSheet(pAnimation) {
@@ -262,11 +281,11 @@ class Player {
 
         this.playerSprites = [
             new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
-                0, new Vector(1, 1, 1), SpawnImage, 4, 270, 270, [2, 2]),
+                0, new Vector(1, 1, 1), SpawnImage, 4, 270, 270, [2, 3]),
             new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
-                0, new Vector(1, 1, 1), IdleImage, 4, 270, 270, [2, 2]),
+                0, new Vector(1, 1, 1), IdleImage, 2, 270, 270, [1, 1], 250),
             new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
-                0, new Vector(1, 1, 1), PumpkinImage, 9, 270, 270, [3, 3]),
+                0, new Vector(1, 1, 1), PumpkinImage, 9, 270, 270, [3, 4]),
             new AnimatedSpriteSheet(this.mMainContext, this.mPosition,
                 0, new Vector(1, 1, 1), DeathImage, 9, 270, 270, [3, 3])
         ];
