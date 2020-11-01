@@ -1,6 +1,6 @@
 function onLoad() {
     var canvas, context, originMatrix;
-    var image;
+    var backgroundImage;
     var rootNode, renderVisitor;
     var enemyTest, player;
     var entities = [];
@@ -38,7 +38,8 @@ function onLoad() {
             }
         }
         */
-        image = new Image();
+        backgroundImage = new Image();
+        backgroundImage.src="SpriteSheets/Background.png";
         originMatrix = setCanvasOrigin();
         renderVisitor = new RenderVisitor(context);
         rootNode = new TransformNode("Root", originMatrix);
@@ -98,7 +99,7 @@ function onLoad() {
     }
 
     function draw() {
-        context.clearRect(-canvas.width / 2, - canvas.height / 2, canvas.width, canvas.height);
+        context.drawImage(backgroundImage, -canvas.width / 2, - canvas.height / 2);
         renderVisitor.visit(rootNode);
 
         // TRY CONTROL

@@ -12,7 +12,6 @@ class Enemy{
         this.health = 10;
         var enemyImage = new Image();
         enemyImage.src = this.sprite;
-<<<<<<< Updated upstream
         this.SPAWN = 0;
         this.WALK = 1;
         this.PUMPKIN = 2;
@@ -36,25 +35,6 @@ class Enemy{
             new AnimatedSpriteSheet(this.mainContext, this.position,
                 0, new Vector(1,1,1), spriteImages[this.BAT], 14, 270, 270, [4,4])
         ];
-=======
-        this.spriteArray[ 
-            new AnimatedSpriteSheet(this.mainContext, this.position,
-                0, new Vector(1,1,1), "SpriteSheets/Demon-Spawn.png", 4, 270, 270, [2,2]),
-            new AnimatedSpriteSheet(this.mainContext, this.position,
-                0, new Vector(1,1,1), "SpriteSheets/Demon-Walk.png", 4, 270, 270, [2,2]),
-            new AnimatedSpriteSheet(this.mainContext, this.position,
-                0, new Vector(1,1,1), "SpriteSheets/Demon-Pumpkin.png", 10, 270, 270, [3,4]),
-            new AnimatedSpriteSheet(this.mainContext, this.position,
-                0, new Vector(1,1,1), "SpriteSheets/Demon-Death.png", 9, 270, 270, [3,3]),
-            new AnimatedSpriteSheet(this.mainContext, this.position,
-                0, new Vector(1,1,1), "SpriteSheets/Demon-Bat.png", 14, 270, 270, [4,4])
-        ];
-        this.SPAWN = 0;
-        this.WALK = 1;
-        this.PUMPKIN = 2;
-        this.DEATH = 3;
-        this.BAT = 4;
->>>>>>> Stashed changes
 
         this.currentSprite = this.spriteArray[this.SPAWN];
 
